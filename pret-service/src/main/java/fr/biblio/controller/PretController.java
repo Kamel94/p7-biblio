@@ -7,13 +7,15 @@ import fr.biblio.proxies.LivreProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class PretController {
 
     @Autowired
@@ -21,6 +23,14 @@ public class PretController {
 
     @Autowired
     PretRepository pretRepository;
+
+    @GetMapping(value = "/prets")
+    public List<Pret> listeDesPrets() {
+
+        List<Pret> prets = pretRepository.findAll();
+
+        return prets;
+    }
 
     @RequestMapping("/")
     public String accueil(Model model) {
