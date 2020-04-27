@@ -14,7 +14,6 @@
     <name>p7-biblio</name>
     <description>Pom parent</description>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -58,7 +57,11 @@
             <url>https://repo.spring.io/milestone</url>
         </pluginRepository>
     </pluginRepositories>
-<modules>  <module>p7-biblio-frontend</module>
-    <module>p7-biblio-backend</module>
+    <modules>
+        <module>p7-biblio-frontend</module>
+        <module>p7-biblio-backend</module>
+        <module>livre-service</module>
+        <module>pret-service</module>
+        <module>authentification-service</module>
   </modules>
 </project>
