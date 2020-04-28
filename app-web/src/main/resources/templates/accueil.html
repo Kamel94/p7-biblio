@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Livres</title>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"/>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Livres</h1>
+    <form th:action="@{/ajout}" method="post">
+    <table>
+        <tbody th:each="livre : ${livres}">
+            <tr>
+                <th>Nom</th>
+            </tr>
+            <tr>
+                <td th:text="${livre.nom}"></td>
+            </tr>
+            <tr>
+                <th>Auteur</th>
+            </tr>
+            <tr>
+                <td th:text="${livre.auteur}"></td>
+            </tr>
+            <tr>
+                <th>Date de publication</th>
+            </tr>
+            <tr>
+                <td th:text="${livre.publication}"></td>
+            </tr>
+        </tbody>
+    </table>
+        <button class="btn btn-dark">Ajouter</button>
+    </form>
+</div>
+</body>
+</html>

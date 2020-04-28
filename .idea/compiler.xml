@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="zuul-server" />
+        <module name="config-server" />
+        <module name="livre-service" />
+        <module name="authentification-service" />
+        <module name="eureka-server" />
+        <module name="pret-service" />
+        <module name="app-web" />
+        <module name="spring-admin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="app-web" target="1.8" />
+      <module name="applicationWeb" target="1.8" />
+      <module name="authentification-service" target="1.8" />
+      <module name="config-server" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+      <module name="livre-service" target="1.8" />
+      <module name="p7-biblio" target="1.8" />
+      <module name="pret-service" target="1.8" />
+      <module name="spring-admin" target="1.8" />
+      <module name="zuul-server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="app-web" options="-parameters" />
+      <module name="applicationWeb" options="-parameters" />
+      <module name="authentification-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="livre-service" options="-parameters" />
+      <module name="pret-service" options="-parameters" />
+      <module name="spring-admin" options="-parameters" />
+      <module name="zuul-server" options="-parameters" />
+    </option>
+  </component>
+</project>

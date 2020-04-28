@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "zuul-server")
+@FeignClient(name = "zuul-server", url = "localhost:8888")
 @RibbonClient(name = "livre-service")
 public interface LivreProxy {
 
