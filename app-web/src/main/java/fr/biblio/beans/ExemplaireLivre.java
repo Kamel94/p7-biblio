@@ -5,22 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Date;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class Livre {
+public class ExemplaireLivre {
 
     private Long id;
-
-    private String nom;
-
-    private String auteur;
-
-    private String couverture;
-
-    private Date publication;
+    private Long livreId;
+    private Long bibliothequeId;
+    private int nombreExemplaire;
 
 }

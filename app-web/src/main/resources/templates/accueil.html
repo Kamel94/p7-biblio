@@ -10,32 +10,36 @@
 <body>
 
 <div class="container">
-    <h1>Livres</h1>
-    <form th:action="@{/ajout}" method="post">
-    <table>
-        <tbody th:each="livre : ${livres}">
+    <h1 class="text-center text-capitalize mt-3 text-primary">Bibliothèques de la ville d'OpenVille</h1>
+        <div class="mt-5" th:each="livre : ${livres}">
+            <img th:src="${livre.couverture} == null ?'Image non disponible' : ${livre.couverture}" style="width:150px;height:200px; border:0px;" class="img-rounded"
+        >
+    <table class="table text-info mt-5">
+        <tbody >
             <tr>
-                <th>Nom</th>
+                <td><strong class="text-primary">Nom :</strong> &nbsp; &nbsp; &nbsp; <a th:href="@{/app-web/detailsLivre/{id}(id=${livre.id})}">[[${livre.nom}]]</a></td>
             </tr>
             <tr>
-                <td th:text="${livre.nom}"></td>
+                <td><strong class="text-primary">Auteur : </strong> &nbsp; &nbsp; &nbsp; [[${livre.auteur}]]</td>
             </tr>
             <tr>
-                <th>Auteur</th>
-            </tr>
-            <tr>
-                <td th:text="${livre.auteur}"></td>
-            </tr>
-            <tr>
-                <th>Date de publication</th>
-            </tr>
-            <tr>
-                <td th:text="${livre.publication}"></td>
+                <td><strong class="text-primary">Date de publication : </strong> &nbsp; &nbsp; &nbsp; [[${livre.publication}]]</td>
             </tr>
         </tbody>
     </table>
-        <button class="btn btn-dark">Ajouter</button>
-    </form>
+        </div>
+    <div class="table text-info mt-5">
+        <div th:each="livre : ${livres}">
+            <p><strong class="text-primary">Nom :</strong> &nbsp; &nbsp; &nbsp; <a th:href="@{/app-web/detailsLivre/{id}(id=${livre.id})}">[[${livre.nom}]]</a></p>
+
+            <p><strong class="text-primary">Auteur : </strong> &nbsp; &nbsp; &nbsp; [[${livre.auteur}]]</p>
+
+            <p><strong class="text-primary">Date de publication : </strong> &nbsp; &nbsp; &nbsp; [[${livre.publication}]]</p>
+
+            <img th:src="${livre.couverture} == null ?'Image non disponible' : ${livre.couverture}" style="width:150px;height:200px; border:0px;" class="img-rounded"
+            >
+        </div>
+    </div>
 </div>
 </body>
 </html>

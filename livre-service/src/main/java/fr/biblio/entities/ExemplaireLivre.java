@@ -16,18 +16,21 @@ public class ExemplaireLivre implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_livre")
-    private Livre livre;
+    @Column(name = "id_livre")
+    private long livreId;
 
-    private boolean disponible;
-    private String etat;
+    @Column(name = "id_bibliotheque")
+    private long bibliothequeId;
+
+    @ManyToOne
+    @JoinColumn(name = "id_livre", referencedColumnName = "id", insertable= false, updatable= false)
+    private Livre livre;
 
     @Column(nullable = true)
     private int nombreExemplaire;
 
     @ManyToOne
-    @JoinColumn(name = "id_bibliotheque")
+    @JoinColumn(name = "id_bibliotheque", referencedColumnName = "id", insertable= false, updatable= false)
     private Bibliotheque bibliotheque;
 
 }

@@ -37,7 +37,7 @@ public class LivreController {
     }
 
     @GetMapping(value = "/livres/{id}")
-    public Livre afficherUnLivre(@PathVariable(name = "id") Long id) throws LivreIntrouvableException {
+    public Livre afficherUnLivre(@PathVariable(name = "id") long id) throws LivreIntrouvableException {
 
         Livre livre = livreRepository.findById(id).orElse(null);
 

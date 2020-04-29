@@ -1,5 +1,6 @@
 package fr.biblio.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Bibliotheque implements Serializable {
     private String adresse;
 
     @OneToMany(mappedBy = "bibliotheque")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ExemplaireLivre> exemplaireLivres;
 
 }

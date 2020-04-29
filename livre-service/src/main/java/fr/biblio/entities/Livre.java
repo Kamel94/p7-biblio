@@ -19,6 +19,7 @@ public class Livre implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
+    private String couverture;
     private String auteur;
     private Date publication;
 
