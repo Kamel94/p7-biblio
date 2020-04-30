@@ -1,5 +1,6 @@
 package fr.biblio.proxies;
 
+import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.Livre;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,6 +19,12 @@ public interface LivreProxy {
     Livre afficherUnLivre(@PathVariable(name = "id") long id);
 
     @GetMapping(value = "/livre-service/exemplaireLivre/{id}")
-    ExemplaireLivre exemplaireParLivre(@PathVariable("id") long id);
+    List<ExemplaireLivre> exemplaireParLivre(@PathVariable("id") long id);
+
+    @GetMapping(value = "/livre-service/listeBibliotheques")
+    List<Bibliotheque> listeDesBibliotheques();
+
+    @GetMapping(value = "/livre-service/listeBibliotheques/{id}")
+    Bibliotheque bibliotheque(@PathVariable("id") long id);
 
 }

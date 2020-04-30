@@ -24,8 +24,11 @@
         <tr>
             <td><strong class="text-primary">Date de publication : </strong> &nbsp; &nbsp; &nbsp; [[${livre.publication}]]</td>
         </tr>
-        <tr>
-            <td><strong class="text-primary">Nombre d'exemplaires : </strong> &nbsp; &nbsp; &nbsp; [[${exemplaire.nombreExemplaire}]]</td>
+        <td class="mt-3">
+            <strong class="text-primary">Liste des bibliothèques : </strong>
+        </td>
+        <tr th:each="e : ${exemplaire}">
+            <td class="mt-3"> &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <small>- [[${e.bibliotheque.nom}]]</small></td>
         </tr>
         </tbody>
     </table>

@@ -98,12 +98,12 @@
 			<groupId>fr.biblio</groupId>
 			<artifactId>pret-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>fr.biblio</groupId>
 			<artifactId>authentification-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<dependencyManagement>

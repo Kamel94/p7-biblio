@@ -16,4 +16,7 @@ public class ExemplaireLivre {
     private Long bibliothequeId;
     private int nombreExemplaire;
 
+    private Livre livre;
+    private Bibliotheque bibliotheque;
+
 }

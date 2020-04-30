@@ -23,13 +23,24 @@ public class ExemplaireLivreController {
     }
 
     @GetMapping("/exemplaireLivre/{id}")
-    public ExemplaireLivre exemplaireParLivre(@PathVariable("id") long id) {
+    public List<ExemplaireLivre> exemplaireParLivre(@PathVariable("id") long id) {
 
-        ExemplaireLivre exemplaireLivre = livreRepository.findExemplaireLivreByLivreId(id);
-
-       // ExemplaireLivre exemplaireLivre = livreRepository.findById(id).orElse(null);
+        List<ExemplaireLivre> exemplaireLivre = livreRepository.findByLivreId(id);
 
         return exemplaireLivre;
+    }
+
+    @GetMapping("/exemplaireLivre/{livreId}/{bibliothequeId}")
+    public ExemplaireLivre exemplaireParLivreEtBiblio(@PathVariable("livreId") long livreId, @PathVariable("bibliothequeId") long bibliothequeId) {
+
+        ExemplaireLivre exemplaireLivre = livreRepository.findExemplaireLivreByLivreIdAndBibliothequeId(livreId, bibliothequeId);
+
+        return exemplaireLivre;
+    }
+
+    @GetMapping("/test/{id}")
+    public List<ExemplaireLivre> test(@PathVariable("id") long id) {
+        return livreRepository.findByLivreId(id);
     }
 
 }

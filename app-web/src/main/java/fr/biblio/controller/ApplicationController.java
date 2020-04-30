@@ -1,5 +1,6 @@
 package fr.biblio.controller;
 
+import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.Livre;
 import fr.biblio.proxies.LivreProxy;
@@ -22,7 +23,9 @@ public class ApplicationController {
     public String accueil(Model model) {
 
         List<Livre> livres = livreProxy.listeDesLivres();
+        List<Bibliotheque> bibliotheques = livreProxy.listeDesBibliotheques();
 
+        model.addAttribute("biblios", bibliotheques);
         model.addAttribute("livres", livres);
 
         return "accueil";
@@ -32,12 +35,27 @@ public class ApplicationController {
     public String detailsLivre(@PathVariable("id") long id, Model model) {
 
         Livre livre = livreProxy.afficherUnLivre(id);
-        ExemplaireLivre exemplaireLivre = livreProxy.exemplaireParLivre(livre.getId());
+        List<ExemplaireLivre> exemplaireLivre = livreProxy.exemplaireParLivre(id);
+      //  Bibliotheque bibliotheque = livreProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
 
+       // model.addAttribute("biblio", bibliotheque);
+        model.addAttribute("exemplaire", exemplaireLivre);/**/
         model.addAttribute("livre", livre);
-        model.addAttribute("exemplaire", exemplaireLivre);
 
         return "details";
+    }
+
+    @GetMapping("/bibliotheques/{id}/{livreId}")
+    public String exemplaireLivreParBiblio(@PathVariable("id") long id, @PathVariable("livreId") long livreId,Model model) {
+
+       // Livre livre = livreProxy.afficherUnLivre(id);
+        /*ExemplaireLivre livre = livreProxy.exemplaireParLivre(livreId);
+        Bibliotheque bibliotheque = livreProxy.bibliotheque(livre.getBibliothequeId());
+
+        model.addAttribute("biblio", bibliotheque);
+        model.addAttribute("exemplaire", livre);*/
+
+        return "exemplaire";
     }
 
 }
