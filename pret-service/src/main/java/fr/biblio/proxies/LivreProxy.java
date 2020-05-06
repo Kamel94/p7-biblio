@@ -18,4 +18,10 @@ public interface LivreProxy {
     @GetMapping(value = "/livre-service/livres/{id}")
     LivreBean afficherUnLivre(@PathVariable(name = "id") Long id);
 
+   /* @GetMapping(value = "/authentification-service/listeUtilisateurs")
+    List<Utilisateur> listeUtilisateurs();
+
+    @GetMapping(value = "/authentification-service/listeUtilisateurs/{id}")
+    Utilisateur utilisateur(@PathVariable("id") long id); */
+
 }

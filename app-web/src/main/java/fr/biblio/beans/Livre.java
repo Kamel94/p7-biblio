@@ -17,13 +17,11 @@ public class Livre {
 
     private Long id;
 
-    private String nom;
+    private String titre;
 
     private String auteur;
 
-    private String couverture;
-
-    private Date publication;
+    private String description;
 
     private Set<ExemplaireLivre> exemplaireLivres;
 

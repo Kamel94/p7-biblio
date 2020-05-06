@@ -27,22 +27,19 @@ public class Pret implements Serializable {
     @Column(nullable = true)
     private boolean prolongation;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Long livreId;
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long exemplaireId;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long utilisateurId;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Long bibliothequeId;
-
-    @Transient
+   /* @Transient
     private LivreBean livreBean;
 
     @Transient
     private Utilisateur utilisateur;
 
     @Transient
-    private Bibliotheque bibliotheque;
+    private Bibliotheque bibliotheque;*/
 
 }

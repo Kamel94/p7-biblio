@@ -58,6 +58,11 @@
                 <artifactId>app-web</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>fr.biblio</groupId>
+                <artifactId>app-batch</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -98,6 +103,7 @@
         <module>eureka-server</module>
         <module>spring-admin</module>
         <module>app-web</module>
+        <module>app-batch</module>
   </modules>
 
     <!-- =============================================================== -->

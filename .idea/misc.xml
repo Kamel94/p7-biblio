@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/usager-ui/pom.xml" />
         <option value="$PROJECT_DIR$/app-web/pom.xml" />
+        <option value="$PROJECT_DIR$/app-batch/pom.xml" />
       </list>
     </option>
   </component>

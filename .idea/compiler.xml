@@ -6,17 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="zuul-server" />
-        <module name="config-server" />
-        <module name="livre-service" />
-        <module name="authentification-service" />
         <module name="eureka-server" />
+        <module name="config-server" />
+        <module name="app-batch" />
+        <module name="zuul-server" />
+        <module name="authentification-service" />
+        <module name="livre-service" />
         <module name="pret-service" />
         <module name="app-web" />
         <module name="spring-admin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="app-batch" target="1.8" />
+      <module name="app-batch2" target="1.8" />
       <module name="app-web" target="1.8" />
       <module name="applicationWeb" target="1.8" />
       <module name="authentification-service" target="1.8" />
@@ -31,6 +34,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="app-batch" options="-parameters" />
+      <module name="app-batch2" options="-parameters" />
       <module name="app-web" options="-parameters" />
       <module name="applicationWeb" options="-parameters" />
       <module name="authentification-service" options="-parameters" />

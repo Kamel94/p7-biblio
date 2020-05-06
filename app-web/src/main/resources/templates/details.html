@@ -12,24 +12,28 @@
 <h1>Détail d'un livre</h1>
 
 <div>
-    <img th:src="${livre.couverture}" style="width:150px;height:200px; border:0px;" class="img-rounded">
     <table>
         <tbody>
         <tr>
-            <td><strong class="text-primary">Nom :</strong> &nbsp; &nbsp; &nbsp; [[${livre.nom}]]</td>
+            <td><strong class="text-primary">Nom :</strong> &nbsp; &nbsp; &nbsp; [[${livre.titre}]]</td>
         </tr>
         <tr>
             <td><strong class="text-primary">Auteur : </strong> &nbsp; &nbsp; &nbsp; [[${livre.auteur}]]</td>
         </tr>
         <tr>
-            <td><strong class="text-primary">Date de publication : </strong> &nbsp; &nbsp; &nbsp; [[${livre.publication}]]</td>
         </tr>
         <td class="mt-3">
             <strong class="text-primary">Liste des bibliothèques : </strong>
         </td>
         <tr th:each="e : ${exemplaire}">
             <td class="mt-3"> &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <small>- [[${e.bibliotheque.nom}]]</small></td>
+            <td th:text="${e.livre.titre}"></td>
+            <td><strong class="text-primary">Date de publication : </strong> &nbsp; &nbsp; &nbsp; [[${e.edition}]]</td>
+            <img th:src="${e.couverture}" style="width:150px;height:200px; border:0px;" class="img-rounded">
         </tr>
+        <!--tr>
+            <td><a class="btn btn-info" th:href="@{/app-web/ajoutPret/{id}(id=${livre.id})}">Faire une demande de prêt</a></td>
+        </tr-->
         </tbody>
     </table>
 </div>

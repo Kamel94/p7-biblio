@@ -19,10 +19,10 @@ public class Livre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
-    private String couverture;
+    private String titre;
     private String auteur;
-    private Date publication;
+    private String categorie;
+    private String description;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "livre")

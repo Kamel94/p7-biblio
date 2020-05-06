@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -22,12 +23,17 @@ public class ExemplaireLivre implements Serializable {
     @Column(name = "id_bibliotheque")
     private long bibliothequeId;
 
+    private int numeroSerie;
+
+    private String editeur;
+
+    private Date edition;
+
+    private String couverture;
+
     @ManyToOne
     @JoinColumn(name = "id_livre", referencedColumnName = "id", insertable= false, updatable= false)
     private Livre livre;
-
-    @Column(nullable = true)
-    private int nombreExemplaire;
 
     @ManyToOne
     @JoinColumn(name = "id_bibliotheque", referencedColumnName = "id", insertable= false, updatable= false)

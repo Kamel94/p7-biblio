@@ -1,11 +1,13 @@
 package fr.biblio.controller;
 
 import fr.biblio.dao.PretRepository;
+import fr.biblio.entities.Livre;
 import fr.biblio.entities.Pret;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -14,12 +16,17 @@ public class PretController {
     @Autowired
     PretRepository pretRepository;
 
-    @GetMapping(value = "/prets")
+    @RequestMapping(value = "/prets")
     public List<Pret> listeDesPrets() {
 
         List<Pret> prets = pretRepository.findAll();
 
         return prets;
+    }
+
+    @PostMapping(value = "/ajoutPret")
+    public Pret ajoutPret(@RequestBody Pret pret) {
+        return pretRepository.save(pret);
     }
 
    /* @RequestMapping("/")
