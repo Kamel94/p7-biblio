@@ -20,7 +20,9 @@ public class Pret implements Serializable {
 
     private Date datePret;
 
-    private Date dateRetour;
+    private String dateRetour;
+
+    private String dateRetourString;
 
     private String statut;
 

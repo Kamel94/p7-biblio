@@ -19,7 +19,9 @@ public class Pret {
 
     private Timestamp datePret;
 
-    private Date dateRetour;
+    private String dateRetour;
+
+    private String dateRetourString;
 
     private String statut;
 
@@ -31,7 +33,7 @@ public class Pret {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long utilisateurId;
 
-    public Pret(Long id, Timestamp datePret, Date dateRetour, String statut, boolean prolongation, Long exemplaireId, Long utilisateurId) {
+    public Pret(Long id, Timestamp datePret, String dateRetour, String statut, boolean prolongation, Long exemplaireId, Long utilisateurId) {
         this.id = id;
         this.datePret = datePret;
         this.dateRetour = dateRetour;

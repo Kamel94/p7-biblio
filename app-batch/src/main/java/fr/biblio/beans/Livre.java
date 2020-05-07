@@ -23,4 +23,6 @@ public class Livre {
 
     private Set<ExemplaireLivre> exemplaireLivres;
 
+    private Set<Pret> prets;
+
 }

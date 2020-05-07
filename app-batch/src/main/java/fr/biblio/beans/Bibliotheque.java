@@ -19,4 +19,6 @@ public class Bibliotheque {
 
     private Set<ExemplaireLivre> exemplaireLivres;
 
+    private Set<Pret> prets;
+
 }

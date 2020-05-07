@@ -29,7 +29,7 @@ public class UtilisateurController {
         return utilisateurRepository.findAll();
     }
 
-    @GetMapping(value = "/listeUtilisateurs/{id}")
+    @GetMapping(value = "/utilisateur/{id}")
     public Utilisateur utilisateur(@PathVariable("id") long id) {
         return utilisateurRepository.findById(id).orElse(null);
     }
