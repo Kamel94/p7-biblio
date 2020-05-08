@@ -1,6 +1,6 @@
 package fr.biblio.configuration;
 
-public class StaticCompareDate {
+public class Constantes {
 
     public static final String EGAL = "Aujourd'hui";
     public static final String APRES = "Après";

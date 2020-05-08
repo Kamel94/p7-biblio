@@ -7,6 +7,8 @@ import fr.biblio.exception.LivreIntrouvableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +34,16 @@ public class LivreController {
         log.info("Récupération de la liste des livres");
 
         return listeLimitee;
+    }
+
+    @GetMapping(value = "/chercherLivre")
+    public List<Livre> chercherLivre(@RequestParam(name="titre", defaultValue = "") String titre,
+                                     @RequestParam(name="auteur", defaultValue = "") String auteur,
+                                     @RequestParam(name="categorie", defaultValue = "") String categorie) {
+
+        List<Livre> recherche = livreRepository.recherche(titre, auteur, categorie);
+
+        return recherche;
     }
 
     @GetMapping(value = "/livres/{id}")

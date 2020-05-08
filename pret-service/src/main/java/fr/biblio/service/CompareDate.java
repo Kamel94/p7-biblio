@@ -1,6 +1,6 @@
 package fr.biblio.service;
 
-import fr.biblio.configuration.StaticCompareDate;
+import fr.biblio.configuration.Constantes;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
@@ -47,11 +47,11 @@ public class CompareDate implements ICompareDate {
 
         // Comparaison des dates
         if (todayDate.equals(dateToCompare)) {
-            compareDate = StaticCompareDate.EGAL;
+            compareDate = Constantes.EGAL;
         } else if (todayDate.after(dateToCompare)) {
-            compareDate = StaticCompareDate.APRES;
+            compareDate = Constantes.APRES;
         } else if (todayDate.before(dateToCompare)) {
-            compareDate = StaticCompareDate.AVANT;
+            compareDate = Constantes.AVANT;
         }
 
         return compareDate;

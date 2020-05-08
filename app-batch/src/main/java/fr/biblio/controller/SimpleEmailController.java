@@ -24,8 +24,8 @@ public class SimpleEmailController {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleEmailController.class);
 
-    @GetMapping(value = "/simple-email/{email}")
-    public @ResponseBody ResponseEntity simpleEmail(@PathVariable("email") String email) {
+    @GetMapping(value = "/simple-email")
+    public @ResponseBody ResponseEntity simpleEmail() {
 
         List<Pret> retourRetard = batchProxy.retardRetour();
 

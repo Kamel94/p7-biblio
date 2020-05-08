@@ -1,6 +1,6 @@
 package fr.biblio.controller;
 
-import fr.biblio.configuration.StaticCompareDate;
+import fr.biblio.configuration.Constantes;
 import fr.biblio.service.ICompareDate;
 import fr.biblio.dao.PretRepository;
 import fr.biblio.entities.Pret;
@@ -43,7 +43,7 @@ public class PretController {
 
             String compareDate = icompareDate.compareDateWithToday(pretStatut.get(i).getDateRetourString());
 
-            if (compareDate.equals(StaticCompareDate.APRES)) {
+            if (compareDate.equals(Constantes.APRES)) {
                 pretStatut.get(i).setStatut("FIN");
             }
         }
@@ -58,7 +58,7 @@ public class PretController {
         String compareDate = "";
         for (int i = 0; i < retardRetour.size(); i++) {
             compareDate = icompareDate.compareDateWithToday(retardRetour.get(i).getDateRetourString());
-            if (compareDate.equals(StaticCompareDate.APRES)) {
+            if (compareDate.equals(Constantes.APRES)) {
                 listeLivreEnRetard.add(retardRetour.get(i));
             }
         }
