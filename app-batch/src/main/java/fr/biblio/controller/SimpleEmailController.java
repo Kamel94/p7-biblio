@@ -48,13 +48,13 @@ public class SimpleEmailController {
 
                     //send mail
                     log.info("****************************************************************************************");
-                    log.info("Rappel envoye a: " + mail);
+                    log.info("Rappel envoyé a: " + mail);
                     log.info("****************************************************************************************");
                     emailService.sendSimpleEmail(destinataire, objet, message);
                 }
                 if (retourRetard.isEmpty()) {
                     log.info("****************************************************************************************");
-                    log.info("Il n'y a aucun email de rappel a envoyer.");
+                    log.info("Il n'y a aucun email de rappel à envoyer.");
                     log.info("****************************************************************************************");
                 }
             } catch (MailException mailException) {

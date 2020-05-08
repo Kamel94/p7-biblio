@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class Pret implements Serializable {
 
     private Date datePret;
 
-    private String dateRetour;
+    private Timestamp dateRetour;
 
     private String dateRetourString;
 
@@ -29,19 +30,8 @@ public class Pret implements Serializable {
     @Column(nullable = true)
     private boolean prolongation;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long exemplaireId;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long utilisateurId;
-
-   /* @Transient
-    private LivreBean livreBean;
-
-    @Transient
-    private Utilisateur utilisateur;
-
-    @Transient
-    private Bibliotheque bibliotheque;*/
 
 }

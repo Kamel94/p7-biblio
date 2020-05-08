@@ -28,8 +28,8 @@ public interface BatchProxy {
     @GetMapping(value = "/pret-service/prets/{id}")
     Pret pret(@PathVariable("id") long id);
 
-    @GetMapping(value = "/pret-service/prets/{statut}")
-    Pret statut(@PathVariable("statut") String statut);
+    /*@GetMapping(value = "/pret-service/pretStatut/{statut}")
+    Pret statut(@PathVariable("statut") String statut);*/
 
     @GetMapping(value = "/livre-service/livres/{id}")
     Livre afficherUnLivre(@PathVariable("id") long id);
