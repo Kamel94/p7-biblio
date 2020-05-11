@@ -8,28 +8,22 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Utilisateur implements Serializable {
+public class Categorie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
-    private String prenom;
-
-    @Column(unique = true)
-    private String email;
+    private String categorie;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-    private String telephone;
-    private String adresse;
-    private String statut;
-    private boolean actif;
+    @OneToMany(mappedBy = "categorie")
+    private Set<Livre> livres;
 
 }

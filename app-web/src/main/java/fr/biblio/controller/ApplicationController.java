@@ -6,8 +6,6 @@ import fr.biblio.beans.Livre;
 import fr.biblio.beans.Pret;
 import fr.biblio.proxies.LivreProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +29,7 @@ public class ApplicationController {
     public String accueil(Model model, String titre, String auteur, String categorie) {
 
         List<Livre> livres = livreProxy.listeDesLivres();
-        List<Livre> livrePage = livreProxy.chercherLivre("%" + titre + "%", "%" + auteur + "%" , "%" + categorie + "%");
+        List<Livre> livrePage = livreProxy.chercherLivre(titre, auteur);
         List<Bibliotheque> bibliotheques = livreProxy.listeDesBibliotheques();
         List<ExemplaireLivre> exemplaireLivres = livreProxy.listeDesExemplaires();
 

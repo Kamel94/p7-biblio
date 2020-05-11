@@ -21,8 +21,18 @@ public class Livre implements Serializable {
     private Long id;
     private String titre;
     private String auteur;
-    private String categorie;
+
+    @Column(name = "id_categorie")
+    private long categorieId;
+
+    private String editeur;
+    private Date edition;
+    private String couverture;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "id_categorie", referencedColumnName = "id", insertable= false, updatable= false)
+    private Categorie categorie;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "livre")

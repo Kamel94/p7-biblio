@@ -21,7 +21,17 @@ public class Livre {
 
     private String auteur;
 
+    private long categorieId;
+
+    private String editeur;
+
+    private Date edition;
+
+    private String couverture;
+
     private String description;
+
+    private Categorie categorie;
 
     private Set<ExemplaireLivre> exemplaireLivres;
 

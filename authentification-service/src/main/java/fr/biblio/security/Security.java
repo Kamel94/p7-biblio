@@ -22,20 +22,15 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-   /* @Autowired
-    private UserDetailsService userDetailsService;*/
-
     @Autowired
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select email as principal, password as credentials, actif from utilisateur where email=?")
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select email as principal, password as credentials, actif from utilisateur where email=?")
                 .authoritiesByUsernameQuery("select email as principal, statut as role from utilisateur where email=?")
                 .rolePrefix("ROLE_")
                 .passwordEncoder(getBC());
-
-        /*auth.userDetailsService(userDetailsService)
-                .passwordEncoder(getBC());*/
     }
 
     @Override
@@ -45,8 +40,8 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/accueil")
+                //.loginPage("/login")
+                .defaultSuccessUrl("/app-web/accueil")
                 .failureUrl("/login?error=true").permitAll()
                 .and()
                 .logout()

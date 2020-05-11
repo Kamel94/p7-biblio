@@ -24,7 +24,7 @@ public class UtilisateurController {
         return new BCryptPasswordEncoder();
     }
 
-    @GetMapping(value = "/listeUtilisateurs")
+    @GetMapping(value = "/usager/listeUtilisateurs")
     public List<Utilisateur> listeUtilisateurs() {
         return utilisateurRepository.findAll();
     }

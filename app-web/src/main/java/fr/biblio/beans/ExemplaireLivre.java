@@ -17,9 +17,8 @@ public class ExemplaireLivre {
     private Long livreId;
     private Long bibliothequeId;
     private int numeroSerie;
-    private String couverture;
-    private String editeur;
-    private Date edition;
+    private int nombreExemplaire;
+    private boolean disponibilite;
 
     private Livre livre;
     private Bibliotheque bibliotheque;

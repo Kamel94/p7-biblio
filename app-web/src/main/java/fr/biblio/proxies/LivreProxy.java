@@ -2,7 +2,6 @@ package fr.biblio.proxies;
 
 import fr.biblio.beans.*;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +21,7 @@ public interface LivreProxy {
 
     @GetMapping(value = "/livre-service/chercherLivre")
     List<Livre> chercherLivre(@RequestParam(name="titre", defaultValue = "") String titre,
-                              @RequestParam(name="auteur", defaultValue = "") String auteur,
-                              @RequestParam(name="categorie", defaultValue = "") String categorie);
+                              @RequestParam(name="auteur", defaultValue = "") String auteur);
 
     @GetMapping(value = "/livre-service/exemplaireLivres/{livreId}")
     List<ExemplaireLivre> exemplaireParLivre(@PathVariable("livreId") long id);

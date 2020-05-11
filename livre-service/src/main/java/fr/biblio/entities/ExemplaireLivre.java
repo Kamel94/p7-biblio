@@ -25,11 +25,9 @@ public class ExemplaireLivre implements Serializable {
 
     private int numeroSerie;
 
-    private String editeur;
+    private boolean disponibilite;
 
-    private Date edition;
-
-    private String couverture;
+    private int nombreExemplaire;
 
     @ManyToOne
     @JoinColumn(name = "id_livre", referencedColumnName = "id", insertable= false, updatable= false)

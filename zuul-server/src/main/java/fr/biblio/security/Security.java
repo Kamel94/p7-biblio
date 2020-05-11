@@ -1,6 +1,6 @@
 package fr.biblio.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+/*import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,7 +18,7 @@ public class Security extends WebSecurityConfigurerAdapter {
    @Autowired
    BCryptPasswordEncoder bCryptPasswordEncoder;
 
-   /* @Autowired
+    @Autowired
     private DataSource dataSource;
 
     @Autowired
@@ -29,7 +29,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select email as principal, statut as role from utilisateur where email=?")
                 .rolePrefix("ROLE_")
                 .passwordEncoder(getBC());
-    } */
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,28 +38,28 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/*/login")
-                .defaultSuccessUrl("/*/accueil")
-                .failureUrl("/*/login?error=true").permitAll()
+                //.loginPage("//login")
+                .defaultSuccessUrl("//accueil")
+                .failureUrl("//login?error=true").permitAll()
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
-                .logoutUrl("/*/logout")
-                .logoutSuccessUrl("/*/login")
+                .logoutUrl("//logout")
+                .logoutSuccessUrl("//login")
                 .and()
                 .sessionManagement()
                 .maximumSessions(1)
-                .expiredUrl("/*/login");
+                .expiredUrl("//login");
 
-        http.authorizeRequests().antMatchers("/*/admin/*").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/*/personnel/*").hasAnyRole("ADMIN", "PERSONNEL");
-        http.authorizeRequests().antMatchers("/*/usager/*").hasAnyRole("ADMIN", "PERSONNEL", "USAGER");
+        http.authorizeRequests().antMatchers("//admin/*").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers("//personnel/*").hasAnyRole("ADMIN", "PERSONNEL");
+        http.authorizeRequests().antMatchers("//usager/*").hasAnyRole("ADMIN", "PERSONNEL", "USAGER");
     }
 
     @Bean(name = "bc")
     BCryptPasswordEncoder getBC() {
         return new BCryptPasswordEncoder();
     }
-}
+}*/
