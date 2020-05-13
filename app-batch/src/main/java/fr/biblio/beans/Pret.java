@@ -43,10 +43,8 @@ public class Pret {
         this.utilisateurId = utilisateurId;
     }
 
-    private Livre livre;
+    private ExemplaireLivre exemplaireLivre;
 
     private Utilisateur utilisateur;
-
-    private Bibliotheque bibliotheque;
 
 }
