@@ -37,23 +37,22 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/").permitAll()
-                .and()
+                /*.authorizeRequests()
+                .antMatchers("/")
+                .permitAll()
+                .and()*/
                 .formLogin()
-                //.loginPage("/login")
                 .defaultSuccessUrl("/app-web/accueil")
-                .failureUrl("/login?error=true").permitAll()
+                .successForwardUrl("/app-web/accueil")
+                .failureUrl("/login?error=true")
+                .permitAll()
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .and()
-                .sessionManagement()
-                .maximumSessions(1)
-                .expiredUrl("/login");
+                .logoutSuccessUrl("/app-web/accueil");
 
         http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
         http.authorizeRequests().antMatchers("/personnel/*").hasAnyRole("ADMIN", "PERSONNEL");

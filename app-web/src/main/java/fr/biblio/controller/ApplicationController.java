@@ -5,6 +5,8 @@ import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.Livre;
 import fr.biblio.beans.Pret;
 import fr.biblio.proxies.LivreProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,20 +27,28 @@ public class ApplicationController {
     @Autowired
     private LivreProxy livreProxy;
 
-    @RequestMapping("/accueil")
-    public String accueil(Model model, String titre, String auteur, String categorie) {
+    Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
-        List<Livre> livres = livreProxy.listeDesLivres();
-        List<Livre> livrePage = livreProxy.chercherLivre(titre, auteur);
+    @GetMapping("/accueil")
+    public String accueil(Model model,
+                          @RequestParam(name="titre", defaultValue = "") String titre,
+                          @RequestParam(name="auteur", defaultValue = "") String auteur,
+                          @RequestParam(name="categorie", defaultValue = "") String categorie) {
+
+
+        List<Livre> livrePage = livreProxy.chercherLivre(titre, auteur, categorie);
         List<Bibliotheque> bibliotheques = livreProxy.listeDesBibliotheques();
         List<ExemplaireLivre> exemplaireLivres = livreProxy.listeDesExemplaires();
+
+        log.info("ça passe" + "titre = " + titre + "auteur = " + auteur);
+        log.info("La liste de recherche : " + livrePage);
 
         model.addAttribute("titre", titre);
         model.addAttribute("auteur", auteur);
         model.addAttribute("categorie", categorie);
         model.addAttribute("exemplaire", exemplaireLivres);
         model.addAttribute("biblios", bibliotheques);
-        model.addAttribute("livres", livres);
+        model.addAttribute("livres", livrePage);
 
         return "accueil";
     }

@@ -38,9 +38,12 @@ public class LivreController {
 
     @GetMapping(value = "/chercherLivre")
     public List<Livre> chercherLivre(@RequestParam(name="titre", defaultValue = "") String titre,
-                                     @RequestParam(name="auteur", defaultValue = "") String auteur) {
+                                     @RequestParam(name="auteur", defaultValue = "") String auteur,
+                                     @RequestParam(name="categorie", defaultValue = "") String categorie) {
 
-        List<Livre> recherche = livreRepository.recherche("%" + titre + "%", "%" + auteur + "%");
+        List<Livre> recherche = livreRepository.recherche("%" + titre + "%", "%" + auteur + "%",  "%" + categorie + "%");
+
+        log.info("Recherche du livre : " + titre + " dont l'auteur est : " + auteur);
 
         return recherche;
     }

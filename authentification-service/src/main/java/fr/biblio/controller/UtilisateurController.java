@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class UtilisateurController {
         return new BCryptPasswordEncoder();
     }
 
-    @GetMapping(value = "/usager/listeUtilisateurs")
+    @GetMapping(value = "/listeUtilisateurs")
     public List<Utilisateur> listeUtilisateurs() {
         return utilisateurRepository.findAll();
     }
@@ -32,6 +33,11 @@ public class UtilisateurController {
     @GetMapping(value = "/utilisateur/{id}")
     public Utilisateur utilisateur(@PathVariable("id") long id) {
         return utilisateurRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping(value = "/utilisateurByEmail/{email}")
+    public Utilisateur email(@PathVariable("email") String email) {
+        return utilisateurRepository.findByEmail(email);
     }
 
     @PostMapping(value = "/ajoutUtilisateur")

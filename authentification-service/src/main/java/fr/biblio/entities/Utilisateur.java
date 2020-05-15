@@ -24,12 +24,9 @@ public class Utilisateur implements Serializable {
 
     @Column(unique = true)
     private String email;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String telephone;
     private String adresse;
     private String statut;
     private boolean actif;
-
 }

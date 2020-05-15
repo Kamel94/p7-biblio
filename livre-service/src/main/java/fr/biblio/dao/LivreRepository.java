@@ -13,6 +13,6 @@ import java.util.List;
 @RepositoryRestResource
 public interface LivreRepository extends JpaRepository<Livre, Long> {
 
-    @Query("select l from Livre l where lower(l.titre) like lower(:titre) and lower(l.auteur) like lower(:auteur)")
-    List<Livre> recherche(@Param("titre") String titre, @Param("auteur") String auteur);
+    @Query("select l from Livre l where lower(l.titre) like lower(:titre) and lower(l.auteur) like lower(:auteur) and lower(l.categorie.categorie) like lower(:categorie)")
+    List<Livre> recherche(@Param("titre") String titre, @Param("auteur") String auteur, @Param("categorie") String categorie);
 }
