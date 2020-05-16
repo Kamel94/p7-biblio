@@ -4,15 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Livres</title>
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"/>
-
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
 
 <div class="container">
-    <h1 class="text-center text-capitalize mt-3 text-primary">Bibliothèques de la ville d'OpenVille <a th:href="@{/authentification-service/connexion}" class="btn btn-info">Se connecter</a></h1>
+    <h1 class="text-center text-capitalize mt-3 text-primary">
+        <a th:if="${utilisateur.id} != 0"
+           th:href="@{/pretUtilisateur/{utilisateurId}/{statut}(utilisateurId=${utilisateur.id}, statut='PRET')}"
+           class="btn btn-info bord-rond">Mes emprunts</a>
+        Bibliothèques de la ville d'OpenVille
+        <a th:if="${utilisateur.id} == 0" th:href="@{/login}" class="btn btn-info bord-rond">Connexion</a>
+        <a th:if="${utilisateur.id} != 0" th:href="@{/logout}" class="btn btn-info bord-rond">Déconnexion</a>
+    </h1>
     <div class="mt-5">
-        <form class="text-primary form-inline" th:action="@{/app-web/accueil}"
+        <form class="text-primary form-inline" th:action="@{/accueil}"
               method="get">
             <label> &nbsp; Titre : &nbsp;</label>
             <input class="form-control-sm"
@@ -23,7 +32,7 @@
             <label>&nbsp;Catégorie : &nbsp;</label>
             <input class="form-control-sm" type="text" name="categorie"
                    th:value="${categorie}"> &nbsp; &nbsp;
-            <button class="btn btn-info text-light">Chercher</button>
+            <button class="btn btn-info rond-lege text-light">Chercher</button>
             &nbsp; &nbsp;
         </form>
     </div>
@@ -31,7 +40,7 @@
     <table class="table text-info mt-5">
         <tbody>
             <tr>
-                <td><strong class="text-primary">Titre :</strong> &nbsp; &nbsp; &nbsp; <a th:href="@{/app-web/detailsLivre/{id}(id=${livre.id})}">[[${livre.titre}]]</a></td>
+                <td><strong class="text-primary">Titre :</strong> &nbsp; &nbsp; &nbsp; <a th:href="@{/detailsLivre/{id}(id=${livre.id})}">[[${livre.titre}]]</a></td>
             </tr>
         </tbody>
         <tbody>

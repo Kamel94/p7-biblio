@@ -1,0 +1,76 @@
+/* ---------------------------------------- Couleur ---------------------------------------- */
+.red {
+	color: red;
+}
+
+/* ---------------------------------- Couleur arrière-plan ---------------------------------- */
+.bleu {
+	background-color: #025E84;
+}
+
+.vert-bleu {
+	background-color: #C9E1DB;
+}
+
+/* ----------------------------------------- Bords ----------------------------------------- */
+.bord-rond {
+	border-radius: 50%;
+}
+
+.rond-haut {
+	border-radius: 32.5px 32.5px 0 0;
+}
+
+.rond-lege {
+	border-radius: 32.5px 32.5px 32.5px 32.5px;
+}
+
+/* --------------------------------------- Placement --------------------------------------- */
+.spacer {
+	margin-top: 20px;
+}
+
+.dr {
+	float: right;
+}
+
+.g {
+	float: left;
+}
+
+.center-div {
+	margin-left: 25%;
+	margin-top: 15%;
+}
+
+.decaler {
+	margin-right: 510px;
+}
+
+.centre {
+	margin-left: 20%;
+}
+
+.btn-titre {
+	margin-left: 25px;
+}
+
+.decaler-droite {
+	margin-left: 700px;
+}
+
+.decaler-dr {
+	margin-left: 510px;
+}
+
+.titre {
+	margin-right: 25px;
+}
+
+.inscription {
+	margin-right: 20px;
+}
+
+.moitie {
+	width: "15px";
+}

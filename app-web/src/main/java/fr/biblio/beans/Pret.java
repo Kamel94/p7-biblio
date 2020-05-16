@@ -21,6 +21,8 @@ public class Pret {
 
     private Date dateRetour;
 
+    private String dateRetourString;
+
     private String statut;
 
     private boolean prolongation;
@@ -41,10 +43,8 @@ public class Pret {
         this.utilisateurId = utilisateurId;
     }
 
-    private Livre livre;
+    private ExemplaireLivre exemplaireLivre;
 
     private Utilisateur utilisateur;
-
-    private Bibliotheque bibliotheque;
 
 }

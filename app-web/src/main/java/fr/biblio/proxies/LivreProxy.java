@@ -51,7 +51,10 @@ public interface LivreProxy {
     @PostMapping(value = "/authentification-service/ajoutUtilisateur")
     Utilisateur ajouterUtilisateur(@RequestBody Utilisateur utilisateur);
 
-    @PostMapping(value = "/pret-service/ajoutPret/{id}")
-    Pret ajoutPret(Pret pret);
+    @GetMapping(value = "/pret-service/pretUtilisateur/{utilisateurId}/{statut}")
+    List<Pret> pretUtilisateur(@PathVariable("utilisateurId") long utilisateurId, @PathVariable("statut") String statut);
+
+    @GetMapping(value = "/pret-service/prets/{id}")
+    Pret pret(@PathVariable("id") long id);
 
 }

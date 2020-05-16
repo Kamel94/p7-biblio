@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exemplaire</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<body>
+<br>
+<div class="container">
+    <a th:href="@{/accueil}" class="btn btn-info rond-lege">Accueil</a>
+    <div class="card mt-3">
+        <div class="card-header">Mes prêts en cours</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label th:text="${utilisateur.prenom}"></label>
+            </div>
+            <div th:each="pret : ${prets}">
+                <table class="table text-info mt-3">
+                    <tbody>
+                    <tr>
+                        <td><strong class="text-primary">Date de Retour : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td><strong class="text-primary">Statut : </strong> &nbsp; &nbsp; &nbsp; [[${pret.statut}]]</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td><strong class="text-primary">Prolongation : </strong> &nbsp; &nbsp; &nbsp; <span th:text="${pret.prolongation} == true ?'Oui' : 'Non'"></span></td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td><a class="btn btn-info rond-lege mt-2" th:href="@{/detailsPret/{exemplaireId}(exemplaireId=${pret.exemplaireId})}">Détails sur le livre</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

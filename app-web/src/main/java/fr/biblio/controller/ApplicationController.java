@@ -1,9 +1,6 @@
 package fr.biblio.controller;
 
-import fr.biblio.beans.Bibliotheque;
-import fr.biblio.beans.ExemplaireLivre;
-import fr.biblio.beans.Livre;
-import fr.biblio.beans.Pret;
+import fr.biblio.beans.*;
 import fr.biblio.proxies.LivreProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ApplicationController {
     Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
     @GetMapping("/accueil")
-    public String accueil(Model model,
+    public String accueil(Model model, Principal principal,
                           @RequestParam(name="titre", defaultValue = "") String titre,
                           @RequestParam(name="auteur", defaultValue = "") String auteur,
                           @RequestParam(name="categorie", defaultValue = "") String categorie) {
@@ -39,6 +38,14 @@ public class ApplicationController {
         List<Livre> livrePage = livreProxy.chercherLivre(titre, auteur, categorie);
         List<Bibliotheque> bibliotheques = livreProxy.listeDesBibliotheques();
         List<ExemplaireLivre> exemplaireLivres = livreProxy.listeDesExemplaires();
+        if (principal != null) {
+            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            model.addAttribute("utilisateur", utilisateur);
+        } else {
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setId(Long.valueOf(0));
+            model.addAttribute("utilisateur", utilisateur);
+        }
 
         log.info("ça passe" + "titre = " + titre + "auteur = " + auteur);
         log.info("La liste de recherche : " + livrePage);
@@ -65,41 +72,39 @@ public class ApplicationController {
         }
 
         model.addAttribute("pret", new Pret());
-        model.addAttribute("exemplaires", exemplaireLivre);/**/
+        model.addAttribute("exemplaires", exemplaireLivre);
         model.addAttribute("livre", livre);
         model.addAttribute("localDate", LocalDate.now());
 
         return "details";
     }
 
-    @PostMapping(value = "/ajoutPret/{id}")
-    public String ajoutPret(Model model, @Valid Pret pret,
-                            BindingResult bindingResult,
-                            @PathVariable("id") long id) {
-        if(bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError());
-            return "redirect:/detailsLivre/{id}";
-        }
+    @GetMapping(value = "/pretUtilisateur/{utilisateurId}/{statut}")
+    public String pretUtilisateur(Model model,
+                                  @PathVariable("utilisateurId") long utilisateurId,
+                                  @PathVariable("statut") String statut) {
 
-        LocalDateTime dateTime = LocalDateTime.now();
-       // livreProxy.ajoutPret(new Pret(null, null, null, "PRET", true, id, Long.valueOf(1), Long.valueOf(3)));
-        //model.addAttribute("localDate", Timestamp.valueOf(dateTime));
-        model.addAttribute("pret", pret);
+        List<Pret> prets = livreProxy.pretUtilisateur(utilisateurId, statut);
+        Utilisateur utilisateur = livreProxy.utilisateur(utilisateurId);
 
-        return "ajoutPret";
+        model.addAttribute("prets", prets);
+        model.addAttribute("utilisateur", utilisateur);
+
+        return "pretUtilisateur";
     }
 
-    @GetMapping("/bibliotheques/{id}/{livreId}")
-    public String exemplaireLivreParBiblio(@PathVariable("id") long id, @PathVariable("livreId") long livreId,Model model) {
+    @GetMapping(value = "/detailsPret/{exemplaireId}")
+    public String detailsPret(Model model, Principal principal,
+                              @PathVariable("exemplaireId") long exemplaireId) {
 
-       // Livre livre = livreProxy.afficherUnLivre(id);
-        /*ExemplaireLivre livre = livreProxy.exemplaireParLivre(livreId);
-        Bibliotheque bibliotheque = livreProxy.bibliotheque(livre.getBibliothequeId());
+        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(exemplaireId);
+        Utilisateur utilisateur = livreProxy.email(principal.getName());
 
-        model.addAttribute("biblio", bibliotheque);
-        model.addAttribute("exemplaire", livre);*/
+        model.addAttribute("exemplaire", exemplaireLivre);
+        model.addAttribute("utilisateur", utilisateur);
 
-        return "ajoutPret";
+        return "detailsPret";
+
     }
 
 }
