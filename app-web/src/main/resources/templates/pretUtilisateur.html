@@ -24,6 +24,16 @@
             <div th:each="pret : ${prets}">
                 <table class="table text-info mt-3">
                     <tbody>
+                    <tr class="text-center">
+                        <td><strong class="text-primary text-center">[[${pret.titreLivre}]] </strong> &nbsp; &nbsp; &nbsp; </td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td><strong class="text-primary">Bibliothèque : </strong> &nbsp; &nbsp; &nbsp; [[${pret.nomBiblio}]]</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
                     <tr>
                         <td><strong class="text-primary">Date de Retour : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
                     </tr>
@@ -35,12 +45,13 @@
                     </tbody>
                     <tbody>
                     <tr>
-                        <td><strong class="text-primary">Prolongation : </strong> &nbsp; &nbsp; &nbsp; <span th:text="${pret.prolongation} == true ?'Oui' : 'Non'"></span></td>
-                    </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
-                        <td><a class="btn btn-info rond-lege mt-2" th:href="@{/detailsPret/{exemplaireId}(exemplaireId=${pret.exemplaireId})}">Détails sur le livre</a></td>
+                        <td><strong class="text-primary">Prolongation : </strong> &nbsp; &nbsp; &nbsp; <span th:text="${pret.prolongation} != 0 ?'Oui' : 'Non'"></span>
+                            &nbsp; &nbsp; &nbsp; <a class="btn btn-info rond-lege"
+                               th:if="${pret.prolongation} == 0"
+                               th:href="@{/prolongation/{pretId}/{utilisateurId}/{statut}(pretId=${pret.id}, utilisateurId=${utilisateur.id}, statut='PRET')}">
+                                Prolonger</a>
+                            </span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

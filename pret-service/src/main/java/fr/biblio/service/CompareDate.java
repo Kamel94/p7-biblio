@@ -1,6 +1,9 @@
 package fr.biblio.service;
 
 import fr.biblio.configuration.Constantes;
+import fr.biblio.entities.Pret;
+import fr.biblio.proxies.LivreProxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
@@ -11,7 +14,6 @@ import java.util.Date;
 
 @Component
 public class CompareDate implements ICompareDate {
-
 
     public String todayDate() {
         Calendar calendar = Calendar.getInstance();

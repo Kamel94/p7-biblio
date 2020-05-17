@@ -25,7 +25,7 @@ public class Pret {
 
     private String statut;
 
-    private boolean prolongation;
+    private int prolongation;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long exemplaireId;
@@ -33,7 +33,7 @@ public class Pret {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long utilisateurId;
 
-    public Pret(Long id, Timestamp datePret, Date dateRetour, String statut, boolean prolongation, Long exemplaireId, Long utilisateurId) {
+    public Pret(Long id, Timestamp datePret, Date dateRetour, String statut, int prolongation, Long exemplaireId, Long utilisateurId) {
         this.id = id;
         this.datePret = datePret;
         this.dateRetour = dateRetour;
@@ -44,7 +44,10 @@ public class Pret {
     }
 
     private ExemplaireLivre exemplaireLivre;
-
     private Utilisateur utilisateur;
+
+    private String titreLivre;
+
+    private String nomBiblio;
 
 }

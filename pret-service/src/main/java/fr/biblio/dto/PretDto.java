@@ -21,7 +21,7 @@ public class PretDto {
 
     private String statut;
 
-    private boolean prolongation;
+    private int prolongation;
 
     private Long exemplaireId;
 

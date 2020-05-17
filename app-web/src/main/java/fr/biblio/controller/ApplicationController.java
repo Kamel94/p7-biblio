@@ -2,6 +2,7 @@ package fr.biblio.controller;
 
 import fr.biblio.beans.*;
 import fr.biblio.proxies.LivreProxy;
+import fr.biblio.service.DateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -25,6 +28,9 @@ public class ApplicationController {
 
     @Autowired
     private LivreProxy livreProxy;
+
+    @Autowired
+    private DateFormat dateFormat;
 
     Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
@@ -87,10 +93,35 @@ public class ApplicationController {
         List<Pret> prets = livreProxy.pretUtilisateur(utilisateurId, statut);
         Utilisateur utilisateur = livreProxy.utilisateur(utilisateurId);
 
+        String formatDate = "dd/MM/yyyy";
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatDate);
+
+        try {
+            for (Pret pret : prets) {
+                String date = simpleDateFormat.format(pret.getDateRetour());
+                pret.setDateRetourString(date);
+                log.info("Date retour = " + pret.getDateRetourString());
+                model.addAttribute("date", date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         model.addAttribute("prets", prets);
         model.addAttribute("utilisateur", utilisateur);
 
         return "pretUtilisateur";
+    }
+
+    @GetMapping(value = "/prolongation/{pretId}/{utilisateurId}/{statut}")
+    public String prolongation(@PathVariable("pretId") long pretId,
+                               @PathVariable("utilisateurId") long utilisateurId,
+                               @PathVariable("statut") String statut) {
+
+        Pret prolongation = livreProxy.prolongation(pretId);
+
+        return "redirect:/pretUtilisateur/{utilisateurId}/{statut}";
     }
 
     @GetMapping(value = "/detailsPret/{exemplaireId}")

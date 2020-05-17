@@ -17,4 +17,6 @@ public interface PretRepository extends JpaRepository<Pret, Long> {
     List<Pret> findByUtilisateurIdAndStatut(long utilisateurId, String statut);
 
     List<Pret> findByDateRetourBefore(Date date);
+
+    List<Pret> findPretByStatutAndDateRetourBefore(String statut, Date date);
 }

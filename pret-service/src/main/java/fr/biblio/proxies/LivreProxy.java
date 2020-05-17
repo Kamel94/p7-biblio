@@ -1,5 +1,7 @@
 package fr.biblio.proxies;
 
+import fr.biblio.beans.Bibliotheque;
+import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,10 +20,10 @@ public interface LivreProxy {
     @GetMapping(value = "/livre-service/livres/{id}")
     LivreBean afficherUnLivre(@PathVariable(name = "id") Long id);
 
-   /* @GetMapping(value = "/authentification-service/listeUtilisateurs")
-    List<Utilisateur> listeUtilisateurs();
+    @GetMapping(value = "/livre-service/listeBibliotheques/{id}")
+    Bibliotheque bibliotheque(@PathVariable("id") long id);
 
-    @GetMapping(value = "/authentification-service/listeUtilisateurs/{id}")
-    Utilisateur utilisateur(@PathVariable("id") long id); */
+    @GetMapping("/livre-service/exemplaireLivre/{id}")
+    ExemplaireLivre exemplaire(@PathVariable("id") long id);
 
 }

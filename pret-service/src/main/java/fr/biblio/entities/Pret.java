@@ -21,17 +21,24 @@ public class Pret implements Serializable {
 
     private Date datePret;
 
-    private Timestamp dateRetour;
+    private Date dateRetour;
 
+    @Transient
     private String dateRetourString;
 
     private String statut;
 
     @Column(nullable = true)
-    private boolean prolongation;
+    private int prolongation;
 
     private Long exemplaireId;
 
     private Long utilisateurId;
+
+    @Transient
+    private String titreLivre;
+
+    @Transient
+    private String nomBiblio;
 
 }
