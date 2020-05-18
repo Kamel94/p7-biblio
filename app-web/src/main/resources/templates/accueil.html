@@ -12,10 +12,13 @@
 <body>
 
 <div class="container">
-    <h1 class="text-center text-capitalize mt-3 text-primary">
-        <a th:if="${utilisateur.id} != 0"
+    <h1 class="text-center mt-3 text-primary">
+        <a th:if="${utilisateur.id} != 0 and ${utilisateur.statut} == 'USAGER'"
            th:href="@{/pretUtilisateur/{utilisateurId}/{statut}(utilisateurId=${utilisateur.id}, statut='PRET')}"
            class="btn btn-info bord-rond">Mes emprunts</a>
+        <a th:if="${utilisateur.id} != 0 and ${utilisateur.statut} != 'USAGER'"
+           th:href="@{/gestionPrets}"
+           class="btn btn-info bord-rond">Gestion des prêts</a>
         Bibliothèques de la ville d'OpenVille
         <a th:if="${utilisateur.id} == 0" th:href="@{/login}" class="btn btn-info bord-rond">Connexion</a>
         <a th:if="${utilisateur.id} != 0" th:href="@{/logout}" class="btn btn-info bord-rond">Déconnexion</a>

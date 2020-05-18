@@ -36,19 +36,13 @@ public class PretController {
     private ICompareDate icompareDate;
 
     @Autowired
-    private PretMapper mapper;
-
-    @Autowired
     private LivreProxy livreProxy;
-
-    @Autowired
-    private ComparePret comparePret;
 
     Logger log = LoggerFactory.getLogger(PretController.class);
 
     @RequestMapping(value = "/prets")
-    public List<PretDto> listeDesPrets() {
-        return mapper.listePret(pretRepository.findAll());
+    public List<Pret> listeDesPrets() {
+        return pretRepository.findAll();
     }
 
     @GetMapping(value = "/prets/{id}")
@@ -85,6 +79,16 @@ public class PretController {
         Date date = new Date();
         List<Pret> prets = pretRepository.findPretByStatutAndDateRetourBefore(Constantes.PRET, date);
         return prets;
+    }
+
+    @PostMapping(value = "/livreRendu/{pretId}")
+    public Pret livreRendu(@PathVariable("pretId") long pretId) {
+
+        Pret pret = pretRepository.findById(pretId).get();
+
+        pret.setStatut(Constantes.RENDU);
+
+        return pretRepository.save(pret);
     }
 
     @PostMapping(value = "/prolongation/{pretId}")

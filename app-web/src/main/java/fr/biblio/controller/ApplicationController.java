@@ -8,19 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -114,6 +106,40 @@ public class ApplicationController {
         return "pretUtilisateur";
     }
 
+    @GetMapping(value = "/gestionPrets")
+    public String gestionPrets(Principal principal, Model model) {
+        List<Pret> prets = livreProxy.listeDesPrets();
+
+        try {
+            for (Pret pret : prets) {
+                ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(pret.getExemplaireId());
+                Livre livre = livreProxy.afficherUnLivre(exemplaireLivre.getLivreId());
+                Bibliotheque bibliotheque = livreProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
+                Utilisateur utilisateur = livreProxy.utilisateur(pret.getUtilisateurId());
+                String date = dateFormat.dateRetour(pret.getId());
+
+                pret.setUtilisateurNom(utilisateur.getNom());
+                pret.setTitreLivre(livre.getTitre());
+                pret.setNomBiblio(bibliotheque.getNom());
+                pret.setDateRetourString(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("prets", prets);
+
+        return "gestionPrets";
+    }
+
+    @GetMapping(value = "/livreRendu/{pretId}")
+    public String livreRendu(@PathVariable("pretId") long pretId) {
+
+        livreProxy.livreRendu(pretId);
+
+        return "redirect:/gestionPrets";
+    }
+
     @GetMapping(value = "/prolongation/{pretId}/{utilisateurId}/{statut}")
     public String prolongation(@PathVariable("pretId") long pretId,
                                @PathVariable("utilisateurId") long utilisateurId,
@@ -134,7 +160,7 @@ public class ApplicationController {
         model.addAttribute("exemplaire", exemplaireLivre);
         model.addAttribute("utilisateur", utilisateur);
 
-        return "detailsPret";
+        return "gestionPrets";
 
     }
 

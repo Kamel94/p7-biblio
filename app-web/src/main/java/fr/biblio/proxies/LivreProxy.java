@@ -51,11 +51,17 @@ public interface LivreProxy {
     @PostMapping(value = "/authentification-service/ajoutUtilisateur")
     Utilisateur ajouterUtilisateur(@RequestBody Utilisateur utilisateur);
 
+    @RequestMapping(value = "/pret-service/prets")
+    List<Pret> listeDesPrets();
+
     @GetMapping(value = "/pret-service/pretUtilisateur/{utilisateurId}/{statut}")
     List<Pret> pretUtilisateur(@PathVariable("utilisateurId") long utilisateurId, @PathVariable("statut") String statut);
 
     @GetMapping(value = "/datePassee")
     List<Pret> datePassee();
+
+    @PostMapping(value = "/pret-service/livreRendu/{pretId}")
+    Pret livreRendu(@PathVariable("pretId") long pretId);
 
     @PostMapping(value = "/pret-service/prolongation/{pretId}")
     Pret prolongation(@PathVariable("pretId") long pretId);

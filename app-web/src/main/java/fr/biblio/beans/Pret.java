@@ -27,6 +27,8 @@ public class Pret {
 
     private int prolongation;
 
+    private String utilisateurNom;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long exemplaireId;
 
