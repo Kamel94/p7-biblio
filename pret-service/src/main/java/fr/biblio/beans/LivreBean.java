@@ -1,14 +1,7 @@
 package fr.biblio.beans;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.biblio.entities.Categorie;
-import fr.biblio.entities.ExemplaireLivre;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.Set;
 
@@ -27,6 +20,5 @@ public class LivreBean {
     private String couverture;
     private String description;
 
-    private Categorie categorie;
     private Set<ExemplaireLivre> exemplaireLivres;
 }

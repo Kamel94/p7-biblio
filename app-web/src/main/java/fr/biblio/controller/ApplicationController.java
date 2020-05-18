@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -33,9 +34,10 @@ public class ApplicationController {
                           @RequestParam(name="categorie", defaultValue = "") String categorie) {
 
 
-        List<Livre> livrePage = livreProxy.chercherLivre(titre, auteur, categorie);
+        List<Livre> livres = livreProxy.chercherLivre(titre, auteur, categorie);
         List<Bibliotheque> bibliotheques = livreProxy.listeDesBibliotheques();
         List<ExemplaireLivre> exemplaireLivres = livreProxy.listeDesExemplaires();
+
         if (principal != null) {
             Utilisateur utilisateur = livreProxy.email(principal.getName());
             model.addAttribute("utilisateur", utilisateur);
@@ -46,14 +48,14 @@ public class ApplicationController {
         }
 
         log.info("ça passe" + "titre = " + titre + "auteur = " + auteur);
-        log.info("La liste de recherche : " + livrePage);
+        log.info("La liste de recherche : " + livres);
 
         model.addAttribute("titre", titre);
         model.addAttribute("auteur", auteur);
         model.addAttribute("categorie", categorie);
         model.addAttribute("exemplaire", exemplaireLivres);
         model.addAttribute("biblios", bibliotheques);
-        model.addAttribute("livres", livrePage);
+        model.addAttribute("livres", livres);
 
         return "accueil";
     }
@@ -77,12 +79,12 @@ public class ApplicationController {
         return "details";
     }
 
-    @GetMapping(value = "/pretUtilisateur/{utilisateurId}/{statut}")
+    @GetMapping(value = "/usager/pretUtilisateur/{utilisateurId}")
     public String pretUtilisateur(Model model,
-                                  @PathVariable("utilisateurId") long utilisateurId,
-                                  @PathVariable("statut") String statut) {
+                                  @PathVariable("utilisateurId") long utilisateurId) {
 
-        List<Pret> prets = livreProxy.pretUtilisateur(utilisateurId, statut);
+        List<Pret> prets = livreProxy.pretUtilisateur(utilisateurId);
+
         Utilisateur utilisateur = livreProxy.utilisateur(utilisateurId);
 
         String formatDate = "dd/MM/yyyy";
@@ -106,9 +108,17 @@ public class ApplicationController {
         return "pretUtilisateur";
     }
 
-    @GetMapping(value = "/gestionPrets")
+    @GetMapping(value = "/personnel/gestionPrets")
     public String gestionPrets(Principal principal, Model model) {
         List<Pret> prets = livreProxy.listeDesPrets();
+        if (principal != null) {
+            Utilisateur u = livreProxy.email(principal.getName());
+            model.addAttribute("utilisateur", u);
+        } else {
+            Utilisateur u = new Utilisateur();
+            u.setId(Long.valueOf(0));
+            model.addAttribute("utilisateur", u);
+        }
 
         try {
             for (Pret pret : prets) {
@@ -139,31 +149,15 @@ public class ApplicationController {
 
         livreProxy.livreRendu(pretId);
 
-        return "redirect:/gestionPrets";
+        return "redirect:/personnel/gestionPrets";
     }
 
-    @GetMapping(value = "/prolongation/{pretId}/{utilisateurId}/{statut}")
+    @GetMapping(value = "/prolongation/{pretId}/{utilisateurId}")
     public String prolongation(@PathVariable("pretId") long pretId,
-                               @PathVariable("utilisateurId") long utilisateurId,
-                               @PathVariable("statut") String statut) {
+                               @PathVariable("utilisateurId") long utilisateurId) {
 
         Pret prolongation = livreProxy.prolongation(pretId);
 
-        return "redirect:/pretUtilisateur/{utilisateurId}/{statut}";
+        return "redirect:/usager/pretUtilisateur/{utilisateurId}";
     }
-
-    @GetMapping(value = "/detailsPret/{exemplaireId}")
-    public String detailsPret(Model model, Principal principal,
-                              @PathVariable("exemplaireId") long exemplaireId) {
-
-        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(exemplaireId);
-        Utilisateur utilisateur = livreProxy.email(principal.getName());
-
-        model.addAttribute("exemplaire", exemplaireLivre);
-        model.addAttribute("utilisateur", utilisateur);
-
-        return "gestionPrets";
-
-    }
-
 }

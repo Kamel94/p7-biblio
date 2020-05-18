@@ -17,7 +17,7 @@ public class Pret {
 
     private Long id;
 
-    private Timestamp datePret;
+    private Date datePret;
 
     private Date dateRetour;
 

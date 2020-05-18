@@ -13,21 +13,6 @@ public interface BatchProxy {
     @GetMapping(value = "/authentification-service/utilisateur/{id}")
     Utilisateur utilisateur(@PathVariable("id") long id);
 
-    @GetMapping(value = "/authentification-service/listeUtilisateurs/{id}")
-    List<Utilisateur> utilisateurs(@PathVariable("id") long id);
-
-    @GetMapping(value = "/livre-service/listeLivres/{id}")
-    List<Livre> livres(@PathVariable("id") long id);
-
-    @GetMapping(value = "/livre-service/exemplaireLivres/{id}")
-    List<ExemplaireLivre> exemplaireLivres(@PathVariable("id") long id);
-
-    @GetMapping(value = "/livre-service/bibliotheques/{id}")
-    List<Bibliotheque> bibliotheques(@PathVariable("id") long id);
-
-    @GetMapping(value = "/pret-service/prets/{id}")
-    Pret pret(@PathVariable("id") long id);
-
     @GetMapping(value = "/livre-service/livres/{id}")
     Livre afficherUnLivre(@PathVariable("id") long id);
 
@@ -37,7 +22,10 @@ public interface BatchProxy {
     @GetMapping(value = "/livre-service/listeBibliotheques/{id}")
     Bibliotheque bibliotheque(@PathVariable("id") long id);
 
-    @GetMapping(value = "/pret-service/retardRetour")
-    List<Pret> retardRetour();
+    @GetMapping(value = "/pret-service/dateRetourPassee")
+    List<Pret> dateRetourPassee();
+
+    @GetMapping(value = "/pret-service/prets/{id}")
+    Pret pret(@PathVariable("id") long id);
 
 }

@@ -48,7 +48,7 @@
                         <td><strong class="text-primary">Prolongation : </strong> &nbsp; &nbsp; &nbsp; <span th:text="${pret.prolongation} != 0 ?'Oui' : 'Non'"></span>
                             &nbsp; &nbsp; &nbsp; <a class="btn btn-info rond-lege"
                                th:if="${pret.prolongation} == 0"
-                               th:href="@{/prolongation/{pretId}/{utilisateurId}/{statut}(pretId=${pret.id}, utilisateurId=${utilisateur.id}, statut='PRET')}">
+                               th:href="@{/prolongation/{pretId}/{utilisateurId}(pretId=${pret.id}, utilisateurId=${utilisateur.id})}">
                                 Prolonger</a>
                             </span>
                         </td>

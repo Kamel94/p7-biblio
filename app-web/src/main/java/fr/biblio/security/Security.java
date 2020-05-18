@@ -52,9 +52,9 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .maximumSessions(1)
                 .expiredUrl("/login");
 
-        http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/personnel/*").hasAnyRole("ADMIN", "PERSONNEL");
-        http.authorizeRequests().antMatchers("/usager/*").hasAnyRole("ADMIN", "PERSONNEL", "USAGER");
+        http.authorizeRequests().antMatchers("/admin/*").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/personnel/*").hasAnyAuthority("ADMIN", "PERSONNEL");
+        http.authorizeRequests().antMatchers("/usager/*").hasAnyAuthority("ADMIN", "PERSONNEL", "USAGER");
     }
 
     @Bean

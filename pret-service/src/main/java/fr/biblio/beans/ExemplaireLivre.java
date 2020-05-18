@@ -1,7 +1,5 @@
 package fr.biblio.beans;
 
-import fr.biblio.entities.Bibliotheque;
-import fr.biblio.entities.Livre;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +23,7 @@ public class ExemplaireLivre {
 
     private int nombreExemplaire;
 
-    private Livre livre;
+    private LivreBean livre;
 
     private Bibliotheque bibliotheque;
 

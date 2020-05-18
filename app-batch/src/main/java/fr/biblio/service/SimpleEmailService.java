@@ -20,7 +20,7 @@ public class SimpleEmailService {
 
     public void sendSimpleEmail(String destinataire, String objet, String message) {
 
-        List<Pret> retourRetard = batchProxy.retardRetour();
+        List<Pret> retourRetard = batchProxy.dateRetourPassee();
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 

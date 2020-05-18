@@ -4,10 +4,7 @@ import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
 import fr.biblio.configuration.Constantes;
-import fr.biblio.dto.PretDto;
-import fr.biblio.mapper.PretMapper;
 import fr.biblio.proxies.LivreProxy;
-import fr.biblio.service.ComparePret;
 import fr.biblio.service.ICompareDate;
 import fr.biblio.dao.PretRepository;
 import fr.biblio.entities.Pret;
@@ -15,11 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -50,11 +44,10 @@ public class PretController {
         return pretRepository.findById(id).get();
     }
 
-    @GetMapping(value = "/pretUtilisateur/{utilisateurId}/{statut}")
-    public List<Pret> pretUtilisateur(@PathVariable("utilisateurId") long utilisateurId,
-                                      @PathVariable("statut") String statut) {
+    @GetMapping(value = "/pretUtilisateur/{utilisateurId}")
+    public List<Pret> pretUtilisateur(@PathVariable("utilisateurId") long utilisateurId) {
 
-        List<Pret> prets = pretRepository.findByUtilisateurIdAndStatut(utilisateurId, statut);
+        List<Pret> prets = pretRepository.findByUtilisateurIdAndStatut(utilisateurId, Constantes.PRET);
         for (Pret pret : prets) {
             ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(pret.getExemplaireId());
             LivreBean livre = livreProxy.afficherUnLivre(exemplaireLivre.getLivreId());
@@ -66,16 +59,8 @@ public class PretController {
         return prets;
     }
 
-    @GetMapping("/pretsFini")
-    public List<Pret> afficheLaListeDesPretsFini() {
-
-        List<Pret> pretStatut = pretRepository.findPretByStatut(Constantes.PRET);
-
-        return pretStatut;
-    }
-
-    @GetMapping(value = "/datePassee")
-    public List<Pret> datePassee() {
+    @GetMapping(value = "/dateRetourPassee")
+    public List<Pret> dateRetourPassee() {
         Date date = new Date();
         List<Pret> prets = pretRepository.findPretByStatutAndDateRetourBefore(Constantes.PRET, date);
         return prets;
@@ -87,6 +72,7 @@ public class PretController {
         Pret pret = pretRepository.findById(pretId).get();
 
         pret.setStatut(Constantes.RENDU);
+        pret.setDateRetour(new Date());
 
         return pretRepository.save(pret);
     }
@@ -110,20 +96,6 @@ public class PretController {
         }
 
         return pretRepository.save(pret);
-    }
-
-    @GetMapping(value = "/retardRetour")
-    public List<Pret> retardRetour() {
-        List<Pret> retardRetour = pretRepository.findPretByStatut(Constantes.RENDU);
-        List<Pret> listeLivreEnRetard = new ArrayList<>();
-        String compareDate = "";
-        for (int i = 0; i < retardRetour.size(); i++) {
-            compareDate = icompareDate.compareDateWithToday(retardRetour.get(i).getDateRetourString());
-            if (compareDate.equals(Constantes.APRES)) {
-                listeLivreEnRetard.add(retardRetour.get(i));
-            }
-        }
-        return listeLivreEnRetard;
     }
 
     @PostMapping(value = "/ajoutPret")

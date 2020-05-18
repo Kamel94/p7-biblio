@@ -14,6 +14,8 @@
 <div class="card-body">
     <a th:href="@{/accueil}"
        class="btn btn-info rond-lege">Retour</a>
+    <a th:href="@{/usager/pretUtilisateur/{utilisateurId}(utilisateurId=${utilisateur.id})}"
+       class="btn btn-info rond-lege dr">Mes emprunts</a>
     <table th:each="pret : ${prets}" class="table text-info mt-5">
         <tbody>
         <tr class="text-center">
@@ -30,7 +32,8 @@
         </tbody>
         <tbody>
         <tr>
-            <td><strong class="text-primary">Date de Retour : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
+            <td th:if="${pret.statut} == 'PRET'"><strong class="text-primary">Date de Retour : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
+            <td th:if="${pret.statut} == 'RENDU'"><strong class="text-primary">Rendu le : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
         </tr>
         </tbody>
         <tbody>
