@@ -29,6 +29,10 @@ public class Pret {
 
     private String utilisateurNom;
 
+    private String utilisateurPrenom;
+
+    private long genreId;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long exemplaireId;
 

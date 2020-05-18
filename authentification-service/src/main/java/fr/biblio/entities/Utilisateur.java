@@ -21,6 +21,8 @@ public class Utilisateur implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    @Column(name = "id_genre")
+    private long genreId;
 
     @Column(unique = true)
     private String email;
@@ -29,4 +31,8 @@ public class Utilisateur implements Serializable {
     private String adresse;
     private String statut;
     private boolean actif;
+
+    @ManyToOne
+    @JoinColumn(name = "id_genre", referencedColumnName = "id", insertable= false, updatable= false)
+    private Genre genre;
 }

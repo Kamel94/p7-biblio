@@ -118,7 +118,9 @@ public class ApplicationController {
                 Utilisateur utilisateur = livreProxy.utilisateur(pret.getUtilisateurId());
                 String date = dateFormat.dateRetour(pret.getId());
 
+                pret.setGenreId(utilisateur.getGenreId());
                 pret.setUtilisateurNom(utilisateur.getNom());
+                pret.setUtilisateurPrenom(utilisateur.getPrenom());
                 pret.setTitreLivre(livre.getTitre());
                 pret.setNomBiblio(bibliotheque.getNom());
                 pret.setDateRetourString(date);

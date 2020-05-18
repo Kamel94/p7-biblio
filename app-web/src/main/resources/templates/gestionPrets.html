@@ -17,7 +17,7 @@
     <table th:each="pret : ${prets}" class="table text-info mt-5">
         <tbody>
         <tr class="text-center">
-            <td><strong class="text-primary text-center">[[${pret.utilisateurNom}]] </strong> &nbsp; &nbsp; &nbsp;</td>
+            <td><strong class="text-primary text-center"><span th:text="${pret.genreId} == 1 ?'Mr' : 'Mme'"> </span> [[${pret.utilisateurNom}]] [[${pret.utilisateurPrenom}]]</strong> &nbsp; &nbsp; &nbsp;</td>
         </tr>
         <tr>
             <td><strong class="text-primary text-center">Titre : </strong> &nbsp; &nbsp; &nbsp; [[${pret.titreLivre}]]</td>
