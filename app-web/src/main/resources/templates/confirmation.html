@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">Inscription validée !</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>ID : </label> <label th:text="${utilisateur.id}"></label>
+            </div>
+            <div class="form-group">
+                <label>Nom : </label> <label th:text="${utilisateur.nom}"></label>
+            </div>
+            <div class="form-group">
+                <label>Prénom : </label> <label th:text="${utilisateur.prenom}"></label>
+            </div>
+            <div th:if="${utilisateur.password == null}" class="form-group">
+                <label>Mot de passe</label> <label
+                    th:text="${utilisateur.password}"></label>
+            </div>
+            <div class="form-group">
+                <label>Email : </label> <label th:text="${utilisateur.email}"></label>
+            </div>
+            <div class="form-group">
+                <label>Date : </label> <label th:text="${utilisateur.dateCreation}"></label>
+            </div>
+            <div class="form-group">
+                <a  th:if="${#httpServletRequest.remoteUser} == null"
+                    class="btn btn-info droite rond-lege" th:href="@{/accueil}">Retourner
+                    à l'accueil</a>
+                <a th:if="${#httpServletRequest.remoteUser} != null"
+                   class="btn btn-info droite rond-lege" th:href="@{/admin/utilisateurs}">Retourner
+                    à la liste des utilisateurs</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -2,18 +2,21 @@ package fr.biblio.controller;
 
 import fr.biblio.beans.*;
 import fr.biblio.proxies.LivreProxy;
+import fr.biblio.service.CompteService;
 import fr.biblio.service.DateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -26,6 +29,9 @@ public class ApplicationController {
 
     @Autowired
     private DateFormat dateFormat;
+
+    @Autowired
+    private CompteService compteService;
 
     Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
@@ -48,9 +54,6 @@ public class ApplicationController {
             utilisateur.setId(Long.valueOf(0));
             model.addAttribute("utilisateur", utilisateur);
         }
-
-        log.info("ça passe" + "titre = " + titre + "auteur = " + auteur);
-        log.info("La liste de recherche : " + livres);
 
         model.addAttribute("titre", titre);
         model.addAttribute("auteur", auteur);
@@ -220,5 +223,42 @@ public class ApplicationController {
         livreProxy.ajoutPret(pret);
 
         return "redirect:/detailsLivre/{livreId}";
+    }
+
+    @GetMapping(value = "/inscription")
+    public String inscription(Model model, Principal principal) {
+
+        LocalDateTime dateTime = LocalDateTime.now();
+
+        model.addAttribute("utilisateur", new Utilisateur());
+        model.addAttribute("localDate", dateTime);
+
+        if(principal != null) {
+            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            model.addAttribute("u", utilisateur);
+        } else {
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setStatut("VISITEUR");
+            model.addAttribute("u", utilisateur);
+        }
+
+        return "inscription";
+    }
+
+    /*
+     * méthode qui permet d'enregistrer l'inscription ou
+     * de renvoyer vers le formulaire d'inscription en cas d'erreur.
+     */
+    @RequestMapping(value="/enregistrer", method=RequestMethod.POST)
+    public String enregistrer(Model model, @Valid Utilisateur utilisateur, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            log.warn("Erreur lors de l'inscription " + bindingResult.getFieldError());
+            return "redirect:/inscription";
+        }
+
+        log.info("Utilisateur ajouté");
+
+        compteService.saveUser(utilisateur);
+        return "confirmation";
     }
 }

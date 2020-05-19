@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +22,10 @@ public class Utilisateur {
     private String telephone;
     private String adresse;
     private String statut;
+    private boolean actif;
+    private Integer utilisateurCreateur;
+    private Integer utilisateurModif;
+    private Timestamp dateCreation;
+    private Timestamp dateModif;
 
 }

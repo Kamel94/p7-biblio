@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body class="vert-bleu">
-<div class="card-fluid bleu">
+<div class="card-fluid bg-dark">
     <nav class="navbar navbar-light">
         <a class="navbar-brand text-light" th:href="@{/accueil}">Accueil</a>
         <a th:if="${#httpServletRequest.remoteUser} != null"
@@ -21,6 +21,11 @@
             class="btn btn-info rond-lege"
             th:if="${#httpServletRequest.remoteUser} == null"
             th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
+       <span th:if="${#httpServletRequest.remoteUser} == null">
+        <a class="btn btn-info rond-lege"
+           th:href="@{/inscription}">S'inscrire</a> <small
+            class="form-text text-muted pt-3">Pas de compte ?</small>
+           </span>
     </nav>
 </div>
 <section layout:fragment="content"></section>

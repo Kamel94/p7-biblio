@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <br>
+    <div class="container">
+        <h3>
+            <strong>Formulaire d'inscription</strong>
+            <span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
+						<label>Administrateur</label>
+                <input type="hidden"
+                       class="form-control" name="utilisateurCreateur" th:value="${u.id}"
+            >[[${u.prenom}]]
+                <span class="red"
+                      th:errors="${u.id}" th:inline="text"></span>
+            </span>
+        </h3>
+        <br> <br>
+        <form th:action="@{/enregistrer}" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Nom <span class="text-danger">*</span></label>
+                    <input type="text"
+                           class="form-control" name="nom" th:value="${utilisateur.nom}"
+                           placeholder="Dupont" required>
+                    <span class="red"
+                          th:errors="${utilisateur.nom}" th:inline="text"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Prénom <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="prenom"
+                           th:value="${utilisateur.prenom}" placeholder="Jean" required>
+                    <span class="red" th:errors="${utilisateur.prenom}" th:inline="text"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Email <span class="text-danger">*</span></label>
+                    <input type="email"
+                           class="form-control" name="email" th:value="${utilisateur.email}"
+                           placeholder="dupont@exemple.com" required>
+                    <span class="red" th:errors="${utilisateur.email}" th:inline="text"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Mot de passe <span class="text-danger">*</span></label> <input
+                        type="password" class="form-control"
+                        placeholder="8 caractères minimum" name="password"
+                        th:value="${utilisateur.password}" required>
+                    <span class="red"
+                          th:errors="${utilisateur.password}" th:inline="text"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Adresse <span class="text-danger">*</span></label>
+                    <input type="text"
+                           class="form-control" name="adresse"
+                           th:value="${utilisateur.adresse}" placeholder="5 rue de Paris, 75001 Paris" required>
+                    <span class="red" th:errors="${utilisateur.adresse}" th:inline="text"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Téléphone</label> <input type="text"
+                                                    class="form-control" name="telephone"
+                                                    th:value="${utilisateur.telephone}" placeholder="Téléphone"><span
+                        class="red" th:errors="${utilisateur.telephone}" th:inline="text"></span>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">Homme</label> &nbsp; &nbsp;
+                    <input type="radio"
+                           class="form-check-input" id="genreHomme" name="genreId"
+                           th:value="1">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">Femme</label> &nbsp; &nbsp;
+                    <input type="radio"
+                           class="form-check-input" id="genreFemme" name="genreId"
+                           th:value="2">
+                </div>
+                <div th:if="${#httpServletRequest.remoteUser} == null"
+                     class="form-group col-md-6">
+                    <label></label> <input type="hidden"
+                                           class="form-control" id="statut" name="statut"
+                                           th:value="'USAGER'">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label></label> <input type="hidden"
+                                               class="form-control" name="dateCreation"
+                                               th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><br>
+                </div>
+                <div class="form-group col-md-4">
+                    <label></label> <input type="hidden"
+                                           class="form-control" name="dateModif"
+                                           th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><br>
+                </div>
+                <div class="form-group col-md-2">
+                    <label></label> <input type="hidden" class="form-control"
+                                           name="actif" th:value="true">
+                </div>
+                <div th:if="${#httpServletRequest.remoteUser} != null"
+                     class="form-group col-md-2">
+                    <label></label> <input type="hidden" class="form-control"
+                                           name="statut" th:value="'PERSONNEL'">
+                </div>
+                <span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
+						<label>Administrateur</label> <input type="hidden"
+                                                             class="form-control" name="utilisateurCreateur" th:value="${u.id}"
+                >[[${#httpServletRequest.remoteUser}]]<span class="red"
+                                                            th:errors="${u.id}" th:inline="text"></span>
+					</span>
+                <span th:if="${#httpServletRequest.remoteUser != null}">
+						 <input type="hidden"
+                                name="utilisateurModif" th:value="${u.id}"
+                         ><span class="red"
+                                th:errors="${u.id}" th:inline="text"></span>
+					</span>
+                <span th:if="${#httpServletRequest.remoteUser == null}">
+						 <input type="hidden"
+                                name="utilisateurCreateur" th:value="${utilisateur.id}"
+                         ><span class="red"
+                                th:errors="${utilisateur.id}" th:inline="text"></span>
+					</span>
+            </div>
+            <div>
+                <span class="text-danger bg-transparent">* Champs obligatoire</span>
+                <span th:if="${#httpServletRequest.remoteUser == null}">
+						 <input type="hidden"
+                                class="form-control" name="utilisateurModif" th:value="${utilisateur.id}"
+                         ><span class="red"
+                                th:errors="${utilisateur.id}" th:inline="text"></span>
+					</span>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-info rond-lege">Valider</button>
+            <a  th:if="${#httpServletRequest.remoteUser} != null"
+                class="btn btn-danger rond-lege btn-titre" th:href="@{/admin/utilisateurs}">Annuler</a>
+            <a  th:if="${#httpServletRequest.remoteUser} == null"
+                class="btn btn-danger rond-lege btn-titre" th:href="@{/accueil}">Annuler</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

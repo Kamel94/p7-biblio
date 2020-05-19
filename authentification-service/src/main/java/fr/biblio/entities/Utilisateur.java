@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -31,6 +32,18 @@ public class Utilisateur implements Serializable {
     private String adresse;
     private String statut;
     private boolean actif;
+
+    @Column(name = "utilisateur_createur")
+    private Integer utilisateurCreateur;
+
+    @Column(name = "utilisateur_modif")
+    private Integer utilisateurModif;
+
+    @Column(name = "date_creation")
+    private Timestamp dateCreation;
+
+    @Column(name = "date_modif")
+    private Timestamp dateModif;
 
     @ManyToOne
     @JoinColumn(name = "id_genre", referencedColumnName = "id", insertable= false, updatable= false)

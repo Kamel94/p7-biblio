@@ -39,8 +39,12 @@
 }
 
 .center-div {
-	margin-left: 25%;
+	margin-left: 30%;
 	margin-top: 15%;
+}
+
+.center-details {
+	margin-left: 25%;
 }
 
 .decaler {
@@ -48,7 +52,8 @@
 }
 
 .centre {
-	margin-left: 20%;
+	margin-left: 40%;
+	margin-right: 40%;
 }
 
 .btn-titre {
@@ -72,5 +77,5 @@
 }
 
 .moitie {
-	width: "15px";
+	width: 15px;
 }
