@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 <head>
     <meta charset="UTF-8">
     <title>Exemplaire</title>
@@ -13,19 +15,16 @@
 
 <body>
 <br>
+<div layout:fragment="content">
 <div class="container">
-    <a th:href="@{/accueil}" class="btn btn-info rond-lege">Accueil</a>
     <div class="card mt-3">
         <div class="card-header">Mes prêts en cours</div>
         <div class="card-body">
-            <div class="form-group">
-                <label th:text="${utilisateur.prenom}"></label>
-            </div>
             <div th:each="pret : ${prets}">
                 <table class="table text-info mt-3">
                     <tbody>
-                    <tr class="text-center">
-                        <td><strong class="text-primary text-center">[[${pret.titreLivre}]] </strong> &nbsp; &nbsp; &nbsp; </td>
+                    <tr class="text-center bg-info">
+                        <td><strong class="text-light text-center">[[${pret.titreLivre}]] </strong> &nbsp; &nbsp; &nbsp; </td>
                     </tr>
                     </tbody>
                     <tbody>
@@ -58,6 +57,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

@@ -16,23 +16,15 @@ import java.util.Set;
 public class Livre {
 
     private Long id;
-
     private String titre;
-
     private String auteur;
-
     private long categorieId;
-
     private String editeur;
-
     private Date edition;
-
+    private String editionString;
     private String couverture;
-
     private String description;
-
     private Categorie categorie;
-
     private Set<ExemplaireLivre> exemplaireLivres;
 
 }

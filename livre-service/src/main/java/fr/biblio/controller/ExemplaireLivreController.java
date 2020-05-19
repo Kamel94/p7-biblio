@@ -49,4 +49,9 @@ public class ExemplaireLivreController {
         return livreRepository.save(exemplaireLivre);
     }
 
+    @PutMapping(value = "/modifExemplaire")
+    public ExemplaireLivre modification(@RequestBody ExemplaireLivre exemplaireLivre) {
+        return livreRepository.save(exemplaireLivre);
+    }
+
 }

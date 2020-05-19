@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Livres</title>
@@ -10,18 +12,21 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-
+<div layout:fragment="content">
+    <div class="mt-3 container-fluid">
+    <strong class="text-info dr"
+          th:if="${#httpServletRequest.remoteUser} != null">Bonjour
+        [[${utilisateur.prenom}]] ! &nbsp; &nbsp;</strong>
+    <a th:if="${utilisateur.id} != 0 and ${utilisateur.statut} == 'USAGER'"
+       th:href="@{/usager/pretUtilisateur/{utilisateurId}(utilisateurId=${utilisateur.id})}"
+       class="btn btn-info bord-rond g">Mes emprunts</a>
+    <a th:if="${utilisateur.id} != 0 and ${utilisateur.statut} != 'USAGER'"
+       th:href="@{/personnel/gestionPrets}"
+       class="btn btn-info bord-rond">Gestion des prêts</a>
+    </div>
 <div class="container">
     <h1 class="text-center mt-3 text-primary">
-        <a th:if="${utilisateur.id} != 0 and ${utilisateur.statut} == 'USAGER'"
-           th:href="@{/usager/pretUtilisateur/{utilisateurId}(utilisateurId=${utilisateur.id})}"
-           class="btn btn-info bord-rond">Mes emprunts</a>
-        <a th:if="${utilisateur.id} != 0 and ${utilisateur.statut} != 'USAGER'"
-           th:href="@{/personnel/gestionPrets}"
-           class="btn btn-info bord-rond">Gestion des prêts</a>
         Bibliothèques de la ville d'OpenVille
-        <a th:if="${utilisateur.id} == 0" th:href="@{/login}" class="btn btn-info bord-rond">Connexion</a>
-        <a th:if="${utilisateur.id} != 0" th:href="@{/logout}" class="btn btn-info bord-rond">Déconnexion</a>
     </h1>
     <div class="mt-5">
         <form class="text-primary form-inline" th:action="@{/accueil}"
@@ -39,8 +44,8 @@
             &nbsp; &nbsp;
         </form>
     </div>
-        <div class="mt-5" th:each="livre : ${livres}">
-    <table class="table text-info mt-5">
+        <div class="mt-5 row" th:each="livre : ${livres}">
+    <table class="table bg-light text-info mt-5">
         <tbody>
             <tr>
                 <td><strong class="text-primary">Titre :</strong> &nbsp; &nbsp; &nbsp; <a th:href="@{/detailsLivre/{id}(id=${livre.id})}">[[${livre.titre}]]</a></td>
@@ -50,6 +55,7 @@
             <tr>
                 <td><strong class="text-primary">Auteur : </strong> &nbsp; &nbsp; &nbsp; [[${livre.auteur}]]</td>
             </tr>
+            <img th:src="${livre.couverture}" style="width:150px;height:200px; border:0px;" class="img-rounded">
         </tbody>
         <tbody>
         <tr>

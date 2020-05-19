@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 <head>
     <meta charset="UTF-8">
     <title>Gestion des prêts</title>
@@ -10,7 +12,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-
+<div layout:fragment="content">
 <div class="card-body">
     <a th:href="@{/accueil}"
        class="btn btn-info rond-lege">Retour</a>
@@ -48,6 +50,7 @@
         <tbody>
         <tr>
     </table>
+</div>
 </div>
 
 </body>

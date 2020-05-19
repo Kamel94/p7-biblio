@@ -69,4 +69,10 @@ public interface LivreProxy {
     @GetMapping(value = "/pret-service/prets/{id}")
     Pret pret(@PathVariable("id") long id);
 
+    @PostMapping(value = "/pret-service/ajoutPret")
+    Pret ajoutPret(@RequestBody Pret pret);
+
+    @PutMapping(value = "/livre-service/modifExemplaire")
+    ExemplaireLivre modification(@RequestBody ExemplaireLivre exemplaireLivre);
+
 }

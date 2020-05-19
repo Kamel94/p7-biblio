@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>layout</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body class="vert-bleu">
+<div class="card-fluid bleu">
+    <nav class="navbar navbar-light">
+        <a class="navbar-brand text-light" th:href="@{/accueil}">Accueil</a>
+        <a th:if="${#httpServletRequest.remoteUser} != null"
+           onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
+           class="btn btn-info rond-lege" th:href="@{/logout}" th:inline="text">
+            Se déconecter</a> <a
+            class="btn btn-info rond-lege"
+            th:if="${#httpServletRequest.remoteUser} == null"
+            th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
+    </nav>
+</div>
+<section layout:fragment="content"></section>
+<br>
+<br>
+<br>
+<br>
+<br>
+<footer class="navbar-fixed-bottom bleu">
+    <div class="container-fluid text-light">
+        <small> OpenVille <br> <b>Copyright
+            @2020</b>
+        </small>
+    </div>
+</footer>
+</body>
+</html>

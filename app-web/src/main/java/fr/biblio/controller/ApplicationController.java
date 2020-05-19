@@ -14,6 +14,8 @@ import java.awt.print.Pageable;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -61,15 +63,29 @@ public class ApplicationController {
     }
 
     @GetMapping("/detailsLivre/{id}")
-    public String detailsLivre(@PathVariable("id") long id, Model model) {
+    public String detailsLivre(@PathVariable("id") long id, Model model, Principal principal) {
 
         Livre livre = livreProxy.afficherUnLivre(id);
         List<ExemplaireLivre> exemplaireLivre = livreProxy.exemplaireParLivre(id);
+        String formatDate = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatDate);
+
+        if (principal == null){
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setId(Long.valueOf(0));
+            model.addAttribute("utilisateur", utilisateur);
+        } else {
+            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            model.addAttribute("utilisateur", utilisateur);
+        }
 
         for (int i = 0; i < exemplaireLivre.size(); i++) {
             ExemplaireLivre exemplaire = livreProxy.exemplaireParLivreEtBiblio(exemplaireLivre.get(i).getLivreId(), exemplaireLivre.get(i).getBibliothequeId());
             model.addAttribute("exemplaire", exemplaire);
         }
+
+        String date = simpleDateFormat.format(livre.getEdition());
+        livre.setEditionString(date);
 
         model.addAttribute("pret", new Pret());
         model.addAttribute("exemplaires", exemplaireLivre);
@@ -159,5 +175,50 @@ public class ApplicationController {
         Pret prolongation = livreProxy.prolongation(pretId);
 
         return "redirect:/usager/pretUtilisateur/{utilisateurId}";
+    }
+
+    @GetMapping(value = "/usager/ajoutPret/{livreId}/{exemplaireId}")
+    public String ajoutPret(@PathVariable("livreId") long livreId,
+                            @PathVariable("exemplaireId") long exemplaireId,
+                            Principal principal) {
+
+        Pret pret = new Pret();
+        if (principal != null) {
+            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            pret.setUtilisateurId(utilisateur.getId());
+        } else {
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setId(Long.valueOf(0));
+        }
+        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(exemplaireId);
+
+        exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
+
+        if (exemplaireLivre.getNombreExemplaire() == 0) {
+            exemplaireLivre.setDisponibilite(false);
+        }
+
+        livreProxy.modification(exemplaireLivre);
+
+        try {
+            GregorianCalendar date = new GregorianCalendar();
+
+            pret.setDatePret(new Date());
+
+            date.setTime(pret.getDatePret());
+            date.add(GregorianCalendar.DAY_OF_YEAR, +28);
+
+            pret.setDateRetour(date.getTime());
+            pret.setProlongation(0);
+            pret.setExemplaireId(exemplaireId);
+            pret.setStatut("PRET");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        livreProxy.ajoutPret(pret);
+
+        return "redirect:/detailsLivre/{livreId}";
     }
 }
