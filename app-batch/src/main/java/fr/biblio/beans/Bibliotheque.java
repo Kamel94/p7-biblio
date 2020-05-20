@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,9 +14,5 @@ public class Bibliotheque {
     private Long id;
     private String nom;
     private String adresse;
-
-    private Set<ExemplaireLivre> exemplaireLivres;
-
-    private Set<Pret> prets;
 
 }

@@ -43,8 +43,6 @@ public class ApplicationController {
 
 
         List<Livre> livres = livreProxy.chercherLivre(titre, auteur, categorie);
-        List<Bibliotheque> bibliotheques = livreProxy.listeDesBibliotheques();
-        List<ExemplaireLivre> exemplaireLivres = livreProxy.listeDesExemplaires();
 
         if (principal != null) {
             Utilisateur utilisateur = livreProxy.email(principal.getName());
@@ -58,13 +56,14 @@ public class ApplicationController {
         model.addAttribute("titre", titre);
         model.addAttribute("auteur", auteur);
         model.addAttribute("categorie", categorie);
-        model.addAttribute("exemplaire", exemplaireLivres);
-        model.addAttribute("biblios", bibliotheques);
         model.addAttribute("livres", livres);
 
         return "accueil";
     }
 
+    /**
+     * Affiche le détail d'un livre.
+     */
     @GetMapping("/detailsLivre/{id}")
     public String detailsLivre(@PathVariable("id") long id, Model model, Principal principal) {
 
@@ -82,11 +81,6 @@ public class ApplicationController {
             model.addAttribute("utilisateur", utilisateur);
         }
 
-        for (int i = 0; i < exemplaireLivre.size(); i++) {
-            ExemplaireLivre exemplaire = livreProxy.exemplaireParLivreEtBiblio(exemplaireLivre.get(i).getLivreId(), exemplaireLivre.get(i).getBibliothequeId());
-            model.addAttribute("exemplaire", exemplaire);
-        }
-
         String date = simpleDateFormat.format(livre.getEdition());
         livre.setEditionString(date);
 
@@ -98,6 +92,9 @@ public class ApplicationController {
         return "details";
     }
 
+    /**
+     * Affiche la liste des prêts en cours de l'utilisateur connecté.
+     */
     @GetMapping(value = "/usager/pretUtilisateur/{utilisateurId}")
     public String pretUtilisateur(Model model,
                                   @PathVariable("utilisateurId") long utilisateurId) {
@@ -126,6 +123,9 @@ public class ApplicationController {
         return "pretUtilisateur";
     }
 
+    /**
+     * Affiche aux personnels tous les prêts.
+     */
     @GetMapping(value = "/personnel/gestionPrets")
     public String gestionPrets(Principal principal, Model model) {
         List<Pret> prets = livreProxy.listeDesPrets();
@@ -162,6 +162,9 @@ public class ApplicationController {
         return "gestionPrets";
     }
 
+    /**
+     * Permet aux personnels d'enregistrer un prêt rendu.
+     */
     @GetMapping(value = "/livreRendu/{pretId}")
     public String livreRendu(@PathVariable("pretId") long pretId) {
 
@@ -170,6 +173,9 @@ public class ApplicationController {
         return "redirect:/personnel/gestionPrets";
     }
 
+    /**
+     * Permet aux usagers de prolonger un emprunt.
+     */
     @GetMapping(value = "/prolongation/{pretId}/{utilisateurId}")
     public String prolongation(@PathVariable("pretId") long pretId,
                                @PathVariable("utilisateurId") long utilisateurId) {
@@ -179,6 +185,9 @@ public class ApplicationController {
         return "redirect:/usager/pretUtilisateur/{utilisateurId}";
     }
 
+    /**
+     * Permet aux usagers de faire une demande de reservation d'un livre pour un emprunt.
+     */
     @GetMapping(value = "/usager/ajoutPret/{livreId}/{exemplaireId}")
     public String ajoutPret(@PathVariable("livreId") long livreId,
                             @PathVariable("exemplaireId") long exemplaireId,
@@ -224,6 +233,9 @@ public class ApplicationController {
         return "redirect:/detailsLivre/{livreId}";
     }
 
+    /**
+     * Affiche le formulaire d'inscription.
+     */
     @GetMapping(value = "/inscription")
     public String inscription(Model model, Principal principal) {
 
@@ -244,8 +256,8 @@ public class ApplicationController {
         return "inscription";
     }
 
-    /*
-     * méthode qui permet d'enregistrer l'inscription ou
+    /**
+     * Méthode qui permet d'enregistrer l'inscription ou
      * de renvoyer vers le formulaire d'inscription en cas d'erreur.
      */
     @RequestMapping(value="/enregistrer", method=RequestMethod.POST)

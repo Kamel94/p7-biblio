@@ -1,14 +1,9 @@
 package fr.biblio.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.biblio.beans.Bibliotheque;
-import fr.biblio.beans.LivreBean;
-import fr.biblio.beans.Utilisateur;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -28,7 +23,6 @@ public class Pret implements Serializable {
 
     private String statut;
 
-    @Column(nullable = true)
     private int prolongation;
 
     private Long exemplaireId;

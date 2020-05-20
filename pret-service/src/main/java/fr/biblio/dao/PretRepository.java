@@ -10,13 +10,9 @@ import java.util.List;
 @RepositoryRestResource
 public interface PretRepository extends JpaRepository<Pret, Long> {
 
-    Pret findByStatut(String statut);
-
     List<Pret> findPretByStatut(String statut);
 
     List<Pret> findByUtilisateurIdAndStatut(long utilisateurId, String statut);
-
-    List<Pret> findByDateRetourBefore(Date date);
 
     List<Pret> findPretByStatutAndDateRetourBefore(String statut, Date date);
 }

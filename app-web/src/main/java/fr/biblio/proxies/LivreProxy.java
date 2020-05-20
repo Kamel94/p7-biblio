@@ -4,7 +4,6 @@ import fr.biblio.beans.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @FeignClient(name = "zuul-server", url = "localhost:8888")
@@ -29,9 +28,6 @@ public interface LivreProxy {
 
     @GetMapping("/livre-service/exemplaireLivre/{id}")
     ExemplaireLivre exemplaire(@PathVariable("id") long id);
-
-    @GetMapping("/livre-service/exemplaireLivres/{livreId}/{bibliothequeId}")
-    ExemplaireLivre exemplaireParLivreEtBiblio(@PathVariable("livreId") long livreId, @PathVariable("bibliothequeId") long bibliothequeId);
 
     @GetMapping(value = "/livre-service/listeBibliotheques")
     List<Bibliotheque> listeDesBibliotheques();

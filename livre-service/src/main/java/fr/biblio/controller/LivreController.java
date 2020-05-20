@@ -7,8 +7,6 @@ import fr.biblio.exception.LivreIntrouvableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +22,9 @@ public class LivreController {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Affiche la liste des livres.
+     */
     @GetMapping(value = "/livres")
     public List<Livre> listeDesLivres() {
 
@@ -36,6 +37,9 @@ public class LivreController {
         return listeLimitee;
     }
 
+    /**
+     * Permet d'effectuer une recherche par mot clé et de retourner le résultat.
+     */
     @GetMapping(value = "/chercherLivre")
     public List<Livre> chercherLivre(@RequestParam(name="titre", defaultValue = "") String titre,
                                      @RequestParam(name="auteur", defaultValue = "") String auteur,
@@ -48,6 +52,9 @@ public class LivreController {
         return recherche;
     }
 
+    /**
+     * Affiche un livre.
+     */
     @GetMapping(value = "/livres/{id}")
     public Livre afficherUnLivre(@PathVariable(name = "id") long id) throws LivreIntrouvableException {
 
@@ -60,6 +67,9 @@ public class LivreController {
         return livre;
     }
 
+    /**
+     * Enregistre un livre.
+     */
     @PostMapping(value = "/ajoutLivre")
     public Livre ajouterUnLivre(@RequestBody Livre livre) {
         return livreRepository.save(livre);

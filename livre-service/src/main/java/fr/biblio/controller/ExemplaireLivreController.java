@@ -13,6 +13,9 @@ public class ExemplaireLivreController {
     @Autowired
     private ExemplaireLivreRepository livreRepository;
 
+    /**
+     * Affiche la liste des exemplaires.
+     */
     @GetMapping("/exemplaireLivre")
     public List<ExemplaireLivre> listeDesExemplaires() {
         List<ExemplaireLivre> exemplaireLivres = livreRepository.findAll();
@@ -20,6 +23,9 @@ public class ExemplaireLivreController {
         return exemplaireLivres;
     }
 
+    /**
+     * Affiche un exemplaire de par son ID.
+     */
     @GetMapping("/exemplaireLivre/{id}")
     public ExemplaireLivre exemplaire(@PathVariable("id") long id) {
 
@@ -28,6 +34,9 @@ public class ExemplaireLivreController {
         return exemplaireLivre;
     }
 
+    /**
+     * Affiche un exemplaire de par l'ID du livre.
+     */
     @GetMapping("/exemplaireLivres/{livreId}")
     public List<ExemplaireLivre> exemplaireParLivre(@PathVariable("livreId") long id) {
 
@@ -36,6 +45,9 @@ public class ExemplaireLivreController {
         return exemplaireLivre;
     }
 
+    /**
+     * Affiche un exemplaire de par les IDs du livre et de la bibliothèque.
+     */
     @GetMapping("/exemplaireLivres/{livreId}/{bibliothequeId}")
     public ExemplaireLivre exemplaireParLivreEtBiblio(@PathVariable("livreId") long livreId, @PathVariable("bibliothequeId") long bibliothequeId) {
 
@@ -44,11 +56,17 @@ public class ExemplaireLivreController {
         return exemplaireLivre;
     }
 
+    /**
+     * Enregistre un exemplaire.
+     */
     @PostMapping("/ajoutExemplaire")
     public ExemplaireLivre ajouterUnExemplaire(@RequestBody ExemplaireLivre exemplaireLivre) {
         return livreRepository.save(exemplaireLivre);
     }
 
+    /**
+     * Permet de modifier un exemplaire.
+     */
     @PutMapping(value = "/modifExemplaire")
     public ExemplaireLivre modification(@RequestBody ExemplaireLivre exemplaireLivre) {
         return livreRepository.save(exemplaireLivre);

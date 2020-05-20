@@ -5,16 +5,13 @@ import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
 import fr.biblio.configuration.Constantes;
 import fr.biblio.proxies.LivreProxy;
-import fr.biblio.service.ICompareDate;
 import fr.biblio.dao.PretRepository;
 import fr.biblio.entities.Pret;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,27 +20,32 @@ import java.util.List;
 public class PretController {
 
     @Autowired
-    PretRepository pretRepository;
-
-    @Qualifier("compareDate")
-    @Autowired
-    private ICompareDate icompareDate;
+    private PretRepository pretRepository;
 
     @Autowired
     private LivreProxy livreProxy;
 
     Logger log = LoggerFactory.getLogger(PretController.class);
 
-    @RequestMapping(value = "/prets")
+    /**
+     * Affiche la liste des prêts.
+     */
+    @GetMapping(value = "/prets")
     public List<Pret> listeDesPrets() {
         return pretRepository.findAll();
     }
 
+    /**
+     * Affiche un prêt de par son ID.
+     */
     @GetMapping(value = "/prets/{id}")
     public Pret pret(@PathVariable("id") long id) {
         return pretRepository.findById(id).get();
     }
 
+    /**
+     * Affiche la liste des prêts d'un utilisateur.
+     */
     @GetMapping(value = "/pretUtilisateur/{utilisateurId}")
     public List<Pret> pretUtilisateur(@PathVariable("utilisateurId") long utilisateurId) {
 
@@ -59,6 +61,9 @@ public class PretController {
         return prets;
     }
 
+    /**
+     * Affiche la liste des prêts dont la date du prêt est passé.
+     */
     @GetMapping(value = "/dateRetourPassee")
     public List<Pret> dateRetourPassee() {
         Date date = new Date();
@@ -66,6 +71,9 @@ public class PretController {
         return prets;
     }
 
+    /**
+     * Permet de modifier le statut et la date retour une fois le livre rendu.
+     */
     @PostMapping(value = "/livreRendu/{pretId}")
     public Pret livreRendu(@PathVariable("pretId") long pretId) {
 
@@ -77,6 +85,9 @@ public class PretController {
         return pretRepository.save(pret);
     }
 
+    /**
+     * Permet de prolonger un prêt.
+     */
     @PostMapping(value = "/prolongation/{pretId}")
     public Pret prolongation(@PathVariable("pretId") long pretId) {
 
@@ -98,6 +109,9 @@ public class PretController {
         return pretRepository.save(pret);
     }
 
+    /**
+     * Permet d'enregistrer un prêt.
+     */
     @PostMapping(value = "/ajoutPret")
     public Pret ajoutPret(@RequestBody Pret pret) {
         return pretRepository.save(pret);

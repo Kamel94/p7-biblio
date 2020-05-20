@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +20,5 @@ public class Utilisateur {
     private String telephone;
     private String adresse;
     private String statut;
-
-    private Set<Pret> prets;
 
 }
