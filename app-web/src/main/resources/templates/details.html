@@ -18,7 +18,7 @@
 <div class="container-fluid mt-5">
     <div class="row center-div">
         <img th:src="${livre.couverture}" style="width:150px;height:200px; border:0px;" class="img-rounded">
-        <table class="col-md-6 btn-titre">
+        <table class="col-md-8 btn-titre">
         <tbody>
         <tr>
             <td><strong class="text-primary"></strong> &nbsp; &nbsp; &nbsp; </td>
@@ -35,13 +35,13 @@
             </strong> &nbsp; &nbsp; &nbsp;
             <span th:each="e : ${exemplaires}">
                   <strong class="text-info">- [[${e.bibliotheque.nom}]] : </strong>  &nbsp;
-                <span th:text="${e.nombreExemplaire}"></span> <br>
+                <span th:text="${e.nombreExemplaire}"></span>
+                <a class="btn btn-info btn-titre rond-lege btn-sm"
+                   th:if="${utilisateur.id} != 0 and ${e.nombreExemplaire} > 0"
+                   th:href="@{/usager/ajoutPret/{livreId}/{exemplaireId}(livreId=${livre.id}, exemplaireId=${e.id})}">
+                    Réserver</a> <br> <br>
                 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
-                <a class="btn btn-info btn-titre rond-lege"
-                   th:if="${utilisateur.id} != 0 and ${exemplaire.nombreExemplaire} > 0"
-                   th:href="@{/usager/ajoutPret/{livreId}/{exemplaireId}(livreId=${livre.id}, exemplaireId=${exemplaire.id})}">
-                    Réserver</a>
             </span>
         </td>
         </tr>

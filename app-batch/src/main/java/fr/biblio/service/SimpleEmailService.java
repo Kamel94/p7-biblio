@@ -15,12 +15,7 @@ public class SimpleEmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    private BatchProxy batchProxy;
-
     public void sendSimpleEmail(String destinataire, String objet, String message) {
-
-        List<Pret> retourRetard = batchProxy.dateRetourPassee();
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 

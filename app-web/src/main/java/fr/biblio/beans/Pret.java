@@ -1,12 +1,10 @@
 package fr.biblio.beans;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -33,13 +31,11 @@ public class Pret {
 
     private long genreId;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long exemplaireId;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long utilisateurId;
 
-    public Pret(Long id, Timestamp datePret, Date dateRetour, String statut, int prolongation, Long exemplaireId, Long utilisateurId) {
+    public Pret(Long id, Date datePret, Date dateRetour, String statut, int prolongation, Long exemplaireId, Long utilisateurId) {
         this.id = id;
         this.datePret = datePret;
         this.dateRetour = dateRetour;

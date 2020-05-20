@@ -17,14 +17,14 @@
         <a th:if="${#httpServletRequest.remoteUser} != null"
            onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
            class="btn btn-info rond-lege" th:href="@{/logout}" th:inline="text">
-            Se déconecter</a> <a
-            class="btn btn-info rond-lege"
-            th:if="${#httpServletRequest.remoteUser} == null"
-            th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
-       <span th:if="${#httpServletRequest.remoteUser} == null">
+            Se déconecter</a>
+        <span th:if="${#httpServletRequest.remoteUser} == null">
         <a class="btn btn-info rond-lege"
-           th:href="@{/inscription}">S'inscrire</a> <small
-            class="form-text text-muted pt-3">Pas de compte ?</small>
+           th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
+        <a class="btn btn-info rond-lege btn-titre"
+           th:href="@{/inscription}">
+            S'inscrire
+        </a>
            </span>
     </nav>
 </div>

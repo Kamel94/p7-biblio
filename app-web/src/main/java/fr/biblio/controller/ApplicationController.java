@@ -114,7 +114,6 @@ public class ApplicationController {
             for (Pret pret : prets) {
                 String date = simpleDateFormat.format(pret.getDateRetour());
                 pret.setDateRetourString(date);
-                log.info("Date retour = " + pret.getDateRetourString());
                 model.addAttribute("date", date);
             }
         } catch (Exception e) {
@@ -183,9 +182,8 @@ public class ApplicationController {
     @GetMapping(value = "/usager/ajoutPret/{livreId}/{exemplaireId}")
     public String ajoutPret(@PathVariable("livreId") long livreId,
                             @PathVariable("exemplaireId") long exemplaireId,
-                            Principal principal) {
+                            Principal principal, Pret pret) {
 
-        Pret pret = new Pret();
         if (principal != null) {
             Utilisateur utilisateur = livreProxy.email(principal.getName());
             pret.setUtilisateurId(utilisateur.getId());
@@ -213,13 +211,14 @@ public class ApplicationController {
 
             pret.setDateRetour(date.getTime());
             pret.setProlongation(0);
-            pret.setExemplaireId(exemplaireId);
+            pret.setExemplaireId(exemplaireLivre.getId());
             pret.setStatut("PRET");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        log.info("pret = " + pret);
         livreProxy.ajoutPret(pret);
 
         return "redirect:/detailsLivre/{livreId}";

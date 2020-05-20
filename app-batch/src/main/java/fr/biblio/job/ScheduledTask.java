@@ -8,11 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.mail.MailException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
@@ -43,7 +40,7 @@ public class ScheduledTask {
                 Bibliotheque bibliotheque = batchProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
 
                 String date = dateFormat.dateRetour(pret.getId());
-                String genre = "";
+                String civilite = "";
                 String msgProlongement = "";
                 String mail = utilisateur.getEmail();
                 String destinataire = mail;
@@ -52,9 +49,9 @@ public class ScheduledTask {
                 pret.setDateRetourString(date);
 
                 if (utilisateur.getGenreId() == 1) {
-                    genre = "Mr";
+                    civilite = "Mr";
                 } else {
-                    genre = "Mme";
+                    civilite = "Mme";
                 }
 
                 if (pret.getProlongation() == 0) {
@@ -63,7 +60,7 @@ public class ScheduledTask {
                     msgProlongement = "\nJe vous informe que malheureusement vous ne pouvez plus prolonger ce prêt.";
                 }
 
-                String message = "Bonjour " + genre + " " + utilisateur.getNom() + "," +
+                String message = "Bonjour " + civilite + " " + utilisateur.getNom() + "," +
                         "\n\nLa date de retour pour le livre " + "''" + livre.getTitre() + "''" +
                         " de " + livre.getAuteur() +
                         " était le " + pret.getDateRetourString() + "..." +
