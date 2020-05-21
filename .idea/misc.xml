@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/app-batch" />
+    <file type="web" url="file://$PROJECT_DIR$/app-web" />
+    <file type="web" url="file://$PROJECT_DIR$/authentification-service" />
+    <file type="web" url="file://$PROJECT_DIR$/config-server" />
+    <file type="web" url="file://$PROJECT_DIR$/eureka-server" />
+    <file type="web" url="file://$PROJECT_DIR$/livre-service" />
+    <file type="web" url="file://$PROJECT_DIR$/pret-service" />
+    <file type="web" url="file://$PROJECT_DIR$/zuul-server" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
