@@ -21,7 +21,7 @@ Il y a deux types de microservices :
         * Rechercher des ouvrages et voir le nombre d'exemplaire disponible.
         * Consulter leurs prêts en cours.
         * Le prêt d'un ouvrage est prolongeable une seule fois. La prolongation ajoute une nouvelle période de prêt(4 semaines) à la période initiale.
-        * Création et retour d'un prêt (fonctions qui seront tranférrées dans un futur logiciel pour le personnels).
+        * Création et retour d'un prêt (fonctions qui seront transférées dans un futur logiciel pour le personnel).
 
     * App-batch : pour le traitement automatisé qui permettra d'envoyer des mails de relance aux usagers n'ayant pas rendu les livres en fin de période de prêt. L'envoie sera automatique à la fréquence d'un par jour.
 
@@ -31,11 +31,11 @@ Il y a deux types de microservices :
 
     * Eureka-server : permet aux microservices de s'enregistrer pour qu'ils puissent communiquer entre eux.
 
-    * Zuul-server : c'est la passerelle (gateway), chaque microservice qui souhaite communiquer avec un aute microservice devra passer par cette passerelle.
+    * Zuul-server : c'est la passerelle (gateway), chaque microservice qui souhaite communiquer avec un autre microservice devra passer par cette passerelle.
 
-    * Spring-admin* : qui permet d'avoir le suivi des microservices enregistés dans eureka.
+    * Spring-admin : permet d'avoir plusieurs informations sur les microservices enregistrés dans eureka.
 
-    ##### *Pour que ce microservice fonctionne il faudra au préalable exécuter le jar de zipkin, la procédure est détaillée dans la partie "installation et déploiement".
+    ###### *Si vous voulez tracer vos requêtes, il y a zipkin, pour cela il faudra au préalable exécuter le jar de zipkin, la procédure est détaillée dans la partie "installation et déploiement".
 
 -------------------------------------
 
@@ -132,9 +132,10 @@ Pour un USAGER :
 
 * clonez le projet Github
 
-##### *Pour faire fonctionner le microservice "spring-admin" il faudra au préalable exécuter le jar de zipkin en ouvrant un terminal, placez-vous dans le dossier p7-biblio et entrez cette commande : 
+###### Si vous voulez tracer vos requêtes, il faudra au préalable exécuter le jar de zipkin en ouvrant un terminal, placez-vous dans le dossier p7-biblio et entrez cette commande : 
     
-* java -jar zipkin-server-2.21.1-exec.jar
+* ###### java -jar zipkin-server-2.21.1-exec.jar
+###### Puis rendez-vous à cette adresse : http://localhost:9411/zipkin/
 
 ### Si vous n'utilisez pas d'IDE
 
@@ -161,7 +162,7 @@ Pour un USAGER :
 
     * config-server
     * eureka-server
-    * spring-admin*
+    * spring-admin
     * zuul-server
     * livre-service
     * authentification-service
@@ -169,9 +170,10 @@ Pour un USAGER :
     * app-batch
     * app-web
 
-    ##### *Pour que ce microservice fonctionne il faudra au préalable exécuter le jar de zipkin en ouvrant un terminal, placez-vous dans le dossier p7-biblio et entrez cette commande : 
-    
-    * java -jar zipkin-server-2.21.1-exec.jar
+    ###### Si vous voulez tracer vos requêtes, il faudra au préalable exécuter le jar de zipkin en ouvrant un terminal, placez-vous dans le dossier p7-biblio et entrez cette commande : 
+        
+    * ###### java -jar zipkin-server-2.21.1-exec.jar
+    ###### Puis rendez-vous à cette adresse : http://localhost:9411/zipkin/
 
 * ouvrez un navigateur web avec l'adresse :
 
