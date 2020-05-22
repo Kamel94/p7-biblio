@@ -13,15 +13,15 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div class="card-body">
-    <a th:href="@{/accueil}"
-       class="btn btn-info rond-lege">Retour</a>
     <a th:href="@{/usager/pretUtilisateur/{utilisateurId}(utilisateurId=${utilisateur.id})}"
-       class="btn btn-info rond-lege dr">Mes emprunts</a>
-    <table th:each="pret : ${prets}" class="table text-info mt-5">
+       class="btn btn-info btn-titre rond-lege mt-2">Mes emprunts</a>
+    <div class="container">
+<div class="card-body">
+    <table th:each="pret : ${prets}"
+           class="table bg-light text-info mt-5">
         <tbody>
-        <tr class="text-center">
-            <td><strong class="text-primary text-center"><span th:text="${pret.genreId} == 1 ?'Mr' : 'Mme'"> </span> [[${pret.utilisateurNom}]] [[${pret.utilisateurPrenom}]]</strong> &nbsp; &nbsp; &nbsp;</td>
+        <tr class="bleu text-center">
+            <td><strong class="text-light text-center"><span th:text="${pret.genreId} == 1 ?'Mr' : 'Mme'"> </span> [[${pret.utilisateurNom}]] [[${pret.utilisateurPrenom}]]</strong> &nbsp; &nbsp; &nbsp;</td>
         </tr>
         <tr>
             <td><strong class="text-primary text-center">Titre : </strong> &nbsp; &nbsp; &nbsp; [[${pret.titreLivre}]]</td>
@@ -51,6 +51,7 @@
         <tr>
     </table>
 </div>
+    </div>
 </div>
 
 </body>
