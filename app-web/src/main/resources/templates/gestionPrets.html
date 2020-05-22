@@ -34,8 +34,20 @@
         </tbody>
         <tbody>
         <tr>
+            <td><strong class="text-primary">Date du prêt : </strong> &nbsp; &nbsp; &nbsp; [[${pret.datePretString}]]</td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
             <td th:if="${pret.statut} == 'PRET'"><strong class="text-primary">Date de Retour : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
             <td th:if="${pret.statut} == 'RENDU'"><strong class="text-primary">Rendu le : </strong> &nbsp; &nbsp; &nbsp; [[${pret.dateRetourString}]]</td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+            <td><strong class="text-primary">Prolongé : </strong> &nbsp; &nbsp; &nbsp;
+                <span th:text="${pret.prolongation} != 0 ?'Oui' : 'Non'"></span>
+            </td>
         </tr>
         </tbody>
         <tbody>
@@ -47,8 +59,6 @@
             </td>
         </tr>
         </tbody>
-        <tbody>
-        <tr>
     </table>
 </div>
     </div>

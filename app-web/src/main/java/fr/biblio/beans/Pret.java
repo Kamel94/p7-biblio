@@ -20,6 +20,7 @@ public class Pret {
     private Date dateRetour;
 
     private String dateRetourString;
+    private String datePretString;
 
     private String statut;
 

@@ -25,4 +25,16 @@ public class DateFormat {
             return date;
     }
 
+    public String datePret(long id) {
+
+        String formatDate = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatDate);
+
+        Pret pret = livreProxy.pret(id);
+
+        String date = simpleDateFormat.format(pret.getDatePret());
+
+        return date;
+    }
+
 }
