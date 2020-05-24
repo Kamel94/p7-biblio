@@ -17,8 +17,6 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -124,58 +122,6 @@ public class ApplicationController {
     }
 
     /**
-     * Affiche aux personnels tous les prêts.
-     */
-    @GetMapping(value = "/personnel/gestionPrets")
-    public String gestionPrets(Principal principal, Model model) {
-        List<Pret> prets = livreProxy.listeDesPrets();
-        if (principal != null) {
-            Utilisateur u = livreProxy.email(principal.getName());
-            model.addAttribute("utilisateur", u);
-        } else {
-            Utilisateur u = new Utilisateur();
-            u.setId(Long.valueOf(0));
-            model.addAttribute("utilisateur", u);
-        }
-
-        try {
-            for (Pret pret : prets) {
-                ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(pret.getExemplaireId());
-                Livre livre = livreProxy.afficherUnLivre(exemplaireLivre.getLivreId());
-                Bibliotheque bibliotheque = livreProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
-                Utilisateur utilisateur = livreProxy.utilisateur(pret.getUtilisateurId());
-                String date = dateFormat.dateRetour(pret.getId());
-                String datePret = dateFormat.datePret(pret.getId());
-
-                pret.setGenreId(utilisateur.getGenreId());
-                pret.setUtilisateurNom(utilisateur.getNom());
-                pret.setUtilisateurPrenom(utilisateur.getPrenom());
-                pret.setTitreLivre(livre.getTitre());
-                pret.setNomBiblio(bibliotheque.getNom());
-                pret.setDatePretString(datePret);
-                pret.setDateRetourString(date);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        model.addAttribute("prets", prets);
-
-        return "gestionPrets";
-    }
-
-    /**
-     * Permet aux personnels d'enregistrer un prêt rendu.
-     */
-    @GetMapping(value = "/livreRendu/{pretId}")
-    public String livreRendu(@PathVariable("pretId") long pretId) {
-
-        livreProxy.livreRendu(pretId);
-
-        return "redirect:/personnel/gestionPrets";
-    }
-
-    /**
      * Permet aux usagers de prolonger un emprunt.
      */
     @GetMapping(value = "/prolongation/{pretId}/{utilisateurId}")
@@ -185,54 +131,6 @@ public class ApplicationController {
         Pret prolongation = livreProxy.prolongation(pretId);
 
         return "redirect:/usager/pretUtilisateur/{utilisateurId}";
-    }
-
-    /**
-     * Permet aux usagers de faire une demande de reservation d'un livre pour un emprunt.
-     */
-    @GetMapping(value = "/usager/ajoutPret/{livreId}/{exemplaireId}")
-    public String ajoutPret(@PathVariable("livreId") long livreId,
-                            @PathVariable("exemplaireId") long exemplaireId,
-                            Principal principal, Pret pret) {
-
-        if (principal != null) {
-            Utilisateur utilisateur = livreProxy.email(principal.getName());
-            pret.setUtilisateurId(utilisateur.getId());
-        } else {
-            Utilisateur utilisateur = new Utilisateur();
-            utilisateur.setId(Long.valueOf(0));
-        }
-        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(exemplaireId);
-
-        exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
-
-        if (exemplaireLivre.getNombreExemplaire() == 0) {
-            exemplaireLivre.setDisponibilite(false);
-        }
-
-        livreProxy.modification(exemplaireLivre);
-
-        try {
-            GregorianCalendar date = new GregorianCalendar();
-
-            pret.setDatePret(new Date());
-
-            date.setTime(pret.getDatePret());
-            date.add(GregorianCalendar.DAY_OF_YEAR, +28);
-
-            pret.setDateRetour(date.getTime());
-            pret.setProlongation(0);
-            pret.setExemplaireId(exemplaireLivre.getId());
-            pret.setStatut("PRET");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        log.info("pret = " + pret);
-        livreProxy.ajoutPret(pret);
-
-        return "redirect:/detailsLivre/{livreId}";
     }
 
     /**

@@ -2,7 +2,7 @@ package fr.biblio.job;
 
 import fr.biblio.beans.*;
 import fr.biblio.proxy.BatchProxy;
-import fr.biblio.service.DateFormat;
+import fr.biblio.service.FormaterDate;
 import fr.biblio.service.SimpleEmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class ScheduledTask {
     private BatchProxy batchProxy;
 
     @Autowired
-    private DateFormat dateFormat;
+    private FormaterDate formaterDate;
 
     @Autowired
     private SimpleEmailService emailService;
@@ -39,14 +39,12 @@ public class ScheduledTask {
                 Livre livre = batchProxy.afficherUnLivre(exemplaireLivre.getLivreId());
                 Bibliotheque bibliotheque = batchProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
 
-                String date = dateFormat.dateRetour(pret.getId());
+                String dateRetour = formaterDate.dateRetour(pret.getDateRetour());
                 String civilite = "";
                 String msgProlongement = "";
                 String mail = utilisateur.getEmail();
                 String destinataire = mail;
                 String objet = "Rappel, la date du prêt est arrivée à échéance !";
-
-                pret.setDateRetourString(date);
 
                 if (utilisateur.getGenreId() == 1) {
                     civilite = "Mr";
@@ -63,7 +61,7 @@ public class ScheduledTask {
                 String message = "Bonjour " + civilite + " " + utilisateur.getNom() + "," +
                         "\n\nLa date de retour pour le livre " + "''" + livre.getTitre() + "''" +
                         " de " + livre.getAuteur() +
-                        " était le " + pret.getDateRetourString() + "..." +
+                        " était le " + dateRetour + "..." +
                         "\nMerci de rapporter le livre au plus tôt à la bibliothèque " +
                         bibliotheque.getNom() + "." +
                         "\n" + msgProlongement +

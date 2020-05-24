@@ -3,6 +3,7 @@ package fr.biblio.controller;
 import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
+import fr.biblio.beans.Utilisateur;
 import fr.biblio.configuration.Constantes;
 import fr.biblio.proxies.LivreProxy;
 import fr.biblio.dao.PretRepository;
@@ -79,6 +80,16 @@ public class PretController {
 
         Pret pret = pretRepository.findById(pretId).get();
 
+        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(pret.getExemplaireId());
+
+        exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() + 1);
+
+        if (exemplaireLivre.getNombreExemplaire() > 0) {
+            exemplaireLivre.setDisponibilite(true);
+        }
+
+        livreProxy.modification(exemplaireLivre);
+
         pret.setStatut(Constantes.RENDU);
         pret.setDateRetour(new Date());
 
@@ -112,8 +123,40 @@ public class PretController {
     /**
      * Permet d'enregistrer un prêt.
      */
-    @PostMapping(value = "/ajoutPret")
-    public Pret ajoutPret(@RequestBody Pret pret) {
+    @PostMapping(value = "/ajoutPret/{utilisateurId}/{exemplaireId}")
+    public Pret ajoutPret(@PathVariable("utilisateurId") long utilisateurId,
+                          @PathVariable("exemplaireId") long exemplaireId) {
+
+        Pret pret = new Pret();
+
+        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(exemplaireId);
+
+        exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
+
+        if (exemplaireLivre.getNombreExemplaire() == 0) {
+            exemplaireLivre.setDisponibilite(false);
+        }
+
+        livreProxy.modification(exemplaireLivre);
+
+        try {
+            GregorianCalendar date = new GregorianCalendar();
+
+            pret.setDatePret(new Date());
+
+            date.setTime(pret.getDatePret());
+            date.add(GregorianCalendar.DAY_OF_YEAR, +28);
+
+            pret.setUtilisateurId(utilisateurId);
+            pret.setDateRetour(date.getTime());
+            pret.setProlongation(0);
+            pret.setExemplaireId(exemplaireLivre.getId());
+            pret.setStatut("PRET");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return pretRepository.save(pret);
     }
 

@@ -3,10 +3,13 @@ package fr.biblio.proxies;
 import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
+import fr.biblio.beans.Utilisateur;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,5 +28,8 @@ public interface LivreProxy {
 
     @GetMapping("/livre-service/exemplaireLivre/{id}")
     ExemplaireLivre exemplaire(@PathVariable("id") long id);
+
+    @PutMapping(value = "/livre-service/modifExemplaire")
+    ExemplaireLivre modification(@RequestBody ExemplaireLivre exemplaireLivre);
 
 }

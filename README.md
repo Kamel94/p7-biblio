@@ -21,7 +21,6 @@ Il y a deux types de microservices :
         * Rechercher des ouvrages et voir le nombre d'exemplaire disponible.
         * Consulter leurs prêts en cours.
         * Le prêt d'un ouvrage est prolongeable une seule fois. La prolongation ajoute une nouvelle période de prêt(4 semaines) à la période initiale.
-        * Création et retour d'un prêt (fonctions qui seront transférées dans un futur logiciel pour le personnel).
 
     * App-batch : pour le traitement automatisé qui permettra d'envoyer des mails de relance aux usagers n'ayant pas rendu les livres en fin de période de prêt. L'envoie sera automatique à la fréquence d'un par jour.
 
@@ -66,7 +65,7 @@ Les scripts SQL présents dans src/main/resources/scripts dans chaque microservi
     * jeu_de_donnees_livre.sql
     * jeu_de_donnees_pret.sql
 
-La configuration des bases de données se trouve dans un dépôt distant, voici une image de ce dépôt :
+La configuration des bases de données se trouve dans le microservice config-server, voici une image de ce dépôt :
 
 ![40% center](image_config/depot-config.png)
 
@@ -100,19 +99,13 @@ dans le fichier "nom_du_microservice".properties (exemple : pret-service.propert
 
 Une fois l'application démarrée, vous pourrez vous connecter via les utilisateurs enregistrés dans le jeu de données fourni, il faudra utiliser les identifiants et mots de passe suivant :
 
-Pour un ADMIN :
-
 * identifiant = jeandupont@gmail.com
 * mot de passe = jean
 * statut = ADMIN
 
-Pour un PERSONNEL :
-
 * identifiant = robertmercier@gmail.com
 * mot de passe = robert
-* statut = PERSONNEL
-
-Pour un USAGER :
+* statut = USAGER
 
 * identifiant = patricklaporte@gmail.com *
 * mot de passe = patrick
@@ -132,10 +125,28 @@ Pour un USAGER :
 
 * clonez le projet Github
 
+* ensuite, il faudra démarrer les microservices en commençant par config-server puis eureka-server et finir par les clients (web et batch).
+    
+    #### Exemple d'ordre : 
+
+    * config-server
+    * eureka-server
+    * spring-admin
+    * zuul-server
+    * livre-service
+    * authentification-service
+    * pret-service
+    * app-batch
+    * app-web
+
 ###### Si vous voulez tracer vos requêtes, il faudra au préalable exécuter le jar de zipkin en ouvrant un terminal, placez-vous dans le dossier p7-biblio et entrez cette commande : 
     
 * ###### java -jar zipkin-server-2.21.1-exec.jar
 ###### Puis rendez-vous à cette adresse : http://localhost:9411/zipkin/
+
+* enfin, ouvrez un navigateur web avec l'adresse :
+
+    * http://localhost:8080/accueil
 
 ### Si vous n'utilisez pas d'IDE
 

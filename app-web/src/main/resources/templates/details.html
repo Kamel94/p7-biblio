@@ -36,12 +36,6 @@
             <span th:each="e : ${exemplaires}">
                   <strong class="text-info">- [[${e.bibliotheque.nom}]] : </strong>  &nbsp;
                 <span th:text="${e.nombreExemplaire}"></span>
-                <a class="btn btn-info btn-titre rond-lege btn-sm"
-                   th:if="${utilisateur.id} != 0 and ${e.nombreExemplaire} > 0"
-                   th:href="@{/usager/ajoutPret/{livreId}/{exemplaireId}(livreId=${livre.id}, exemplaireId=${e.id})}">
-                    Réserver</a> <br> <br>
-                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
             </span>
         </td>
         </tr>
