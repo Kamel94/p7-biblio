@@ -101,7 +101,7 @@ Une fois l'application démarrée, vous pourrez vous connecter via les utilisate
 
 * identifiant = jeandupont@gmail.com
 * mot de passe = jean
-* statut = ADMIN
+* statut = USAGER
 
 * identifiant = robertmercier@gmail.com
 * mot de passe = robert
