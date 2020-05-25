@@ -1,7 +1,7 @@
 package fr.biblio.controller;
 
 import fr.biblio.beans.*;
-import fr.biblio.proxies.LivreProxy;
+import fr.biblio.proxies.WebProxy;
 import fr.biblio.service.CompteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.util.List;
 public class ApplicationController {
 
     @Autowired
-    private LivreProxy livreProxy;
+    private WebProxy webProxy;
 
     @Autowired
     private CompteService compteService;
@@ -36,10 +36,10 @@ public class ApplicationController {
                           @RequestParam(name="categorie", defaultValue = "") String categorie) {
 
 
-        List<Livre> livres = livreProxy.chercherLivreParCriteres(titre, auteur, categorie);
+        List<Livre> livres = webProxy.chercherLivreParCriteres(titre, auteur, categorie);
 
         if (principal != null) {
-            Utilisateur utilisateur = livreProxy.getUtilisateurWithEmail(principal.getName());
+            Utilisateur utilisateur = webProxy.getUtilisateurWithEmail(principal.getName());
             model.addAttribute("utilisateur", utilisateur);
         } else {
             Utilisateur utilisateur = new Utilisateur();
@@ -61,8 +61,8 @@ public class ApplicationController {
     @GetMapping("/detailsLivre/{id}")
     public String detailsLivre(@PathVariable("id") long id, Model model, Principal principal) {
 
-        Livre livre = livreProxy.getLivre(id);
-        List<ExemplaireLivre> exemplaireLivre = livreProxy.getExemplairesWithLivreId(id);
+        Livre livre = webProxy.getLivre(id);
+        List<ExemplaireLivre> exemplaireLivre = webProxy.getExemplairesWithLivreId(id);
         String formatDate = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatDate);
 
@@ -71,7 +71,7 @@ public class ApplicationController {
             utilisateur.setId(Long.valueOf(0));
             model.addAttribute("utilisateur", utilisateur);
         } else {
-            Utilisateur utilisateur = livreProxy.getUtilisateurWithEmail(principal.getName());
+            Utilisateur utilisateur = webProxy.getUtilisateurWithEmail(principal.getName());
             model.addAttribute("utilisateur", utilisateur);
         }
 
@@ -93,9 +93,9 @@ public class ApplicationController {
     public String pretUtilisateur(Model model,
                                   @PathVariable("utilisateurId") long utilisateurId) {
 
-        List<Pret> prets = livreProxy.getPretsWithUtilisateurId(utilisateurId);
+        List<Pret> prets = webProxy.getPretsWithUtilisateurId(utilisateurId);
 
-        Utilisateur utilisateur = livreProxy.getUtilisateur(utilisateurId);
+        Utilisateur utilisateur = webProxy.getUtilisateur(utilisateurId);
 
         String formatDate = "dd/MM/yyyy";
 
@@ -124,7 +124,7 @@ public class ApplicationController {
     public String prolongation(@PathVariable("pretId") long pretId,
                                @PathVariable("utilisateurId") long utilisateurId) {
 
-        Pret prolongation = livreProxy.prolongerPret(pretId);
+        Pret prolongation = webProxy.prolongerPret(pretId);
 
         return "redirect:/usager/pretUtilisateur/{utilisateurId}";
     }
@@ -141,7 +141,7 @@ public class ApplicationController {
         model.addAttribute("localDate", dateTime);
 
         if(principal != null) {
-            Utilisateur utilisateur = livreProxy.getUtilisateurWithEmail(principal.getName());
+            Utilisateur utilisateur = webProxy.getUtilisateurWithEmail(principal.getName());
             model.addAttribute("u", utilisateur);
         } else {
             Utilisateur utilisateur = new Utilisateur();

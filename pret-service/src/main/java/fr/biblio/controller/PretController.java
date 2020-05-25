@@ -4,7 +4,7 @@ import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
 import fr.biblio.configuration.Constantes;
-import fr.biblio.proxies.LivreProxy;
+import fr.biblio.proxies.PretProxy;
 import fr.biblio.dao.PretRepository;
 import fr.biblio.entities.Pret;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class PretController {
     private PretRepository pretRepository;
 
     @Autowired
-    private LivreProxy livreProxy;
+    private PretProxy pretProxy;
 
     Logger log = LoggerFactory.getLogger(PretController.class);
 
@@ -51,9 +51,9 @@ public class PretController {
 
         List<Pret> prets = pretRepository.findByUtilisateurIdAndStatut(utilisateurId, Constantes.PRET);
         for (Pret pret : prets) {
-            ExemplaireLivre exemplaireLivre = livreProxy.getExemplaire(pret.getExemplaireId());
-            LivreBean livre = livreProxy.getLivre(exemplaireLivre.getLivreId());
-            Bibliotheque bibliotheque = livreProxy.getBibliotheque(exemplaireLivre.getBibliothequeId());
+            ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(pret.getExemplaireId());
+            LivreBean livre = pretProxy.getLivre(exemplaireLivre.getLivreId());
+            Bibliotheque bibliotheque = pretProxy.getBibliotheque(exemplaireLivre.getBibliothequeId());
 
             pret.setTitreLivre(livre.getTitre());
             pret.setNomBiblio(bibliotheque.getNom());
@@ -79,7 +79,7 @@ public class PretController {
 
         Pret pret = pretRepository.findById(pretId).get();
 
-        ExemplaireLivre exemplaireLivre = livreProxy.getExemplaire(pret.getExemplaireId());
+        ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(pret.getExemplaireId());
 
         exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() + 1);
 
@@ -87,7 +87,7 @@ public class PretController {
             exemplaireLivre.setDisponibilite(true);
         }
 
-        livreProxy.updateExemplaire(exemplaireLivre);
+        pretProxy.updateExemplaire(exemplaireLivre);
 
         pret.setStatut(Constantes.RENDU);
         pret.setDateRetour(new Date());
@@ -128,7 +128,7 @@ public class PretController {
 
         Pret pret = new Pret();
 
-        ExemplaireLivre exemplaireLivre = livreProxy.getExemplaire(exemplaireId);
+        ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(exemplaireId);
 
         exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
 
@@ -136,7 +136,7 @@ public class PretController {
             exemplaireLivre.setDisponibilite(false);
         }
 
-        livreProxy.updateExemplaire(exemplaireLivre);
+        pretProxy.updateExemplaire(exemplaireLivre);
 
         try {
             GregorianCalendar date = new GregorianCalendar();

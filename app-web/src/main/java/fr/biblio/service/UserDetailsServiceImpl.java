@@ -1,7 +1,7 @@
 package fr.biblio.service;
 
 import fr.biblio.beans.Utilisateur;
-import fr.biblio.proxies.LivreProxy;
+import fr.biblio.proxies.WebProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private CompteService compteService;
 
     @Autowired
-    private LivreProxy livreProxy;
+    private WebProxy webProxy;
 
     Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        List<Utilisateur> utilisateurs = livreProxy.listeUtilisateurs();
+        List<Utilisateur> utilisateurs = webProxy.listeUtilisateurs();
 
         for (Utilisateur util : utilisateurs) {
             authorities.add(new SimpleGrantedAuthority(utilisateur.getStatut()));

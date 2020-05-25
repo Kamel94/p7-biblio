@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(name = "zuul-server", url = "localhost:8888")
-public interface LivreProxy {
+public interface WebProxy {
 
     @GetMapping(value = "/livre-service/livres")
     List<Livre> listeDesLivres();
