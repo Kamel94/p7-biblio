@@ -48,7 +48,7 @@ Il y a deux types de microservices :
 
 ## Bases de données
 
-Il y a 3 bases de données chaucune se trouvant dans les microservices :  
+Il y a 3 bases de données chacune se trouvant dans les microservices :  
 livre-service, pret-service et authentification-service.
 
 Les scripts SQL présents dans src/main/resources/scripts dans chaque microservice permettent de créer une base de données avec un jeu de données.
@@ -112,6 +112,16 @@ Une fois l'application démarrée, vous pourrez vous connecter via les utilisate
 * statut = USAGER
 
 ##### *Pour tester le batch, vous pouvez changer l'adresse mail pour mettre la vôtre à la place dans le jeu de données fourni dans authentification-service.
+
+---
+
+## Configuration du batch
+
+Pour configurer le batch il faudra : 
+   * se rendre dans config-server
+   * entrer votre adresse Gmail et votre mot de passe comme illustré ici :
+
+![40% center](image_config/config-mail.png)
 
 ---
 
