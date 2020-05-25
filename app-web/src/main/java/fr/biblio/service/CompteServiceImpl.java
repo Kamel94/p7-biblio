@@ -23,6 +23,6 @@ public class CompteServiceImpl implements CompteService {
 
     @Override
     public Utilisateur findByEmail(String email) {
-        return livreProxy.email(email);
+        return livreProxy.getUtilisateurWithEmail(email);
     }
 }

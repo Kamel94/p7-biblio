@@ -39,7 +39,7 @@ public class UtilisateurController {
      * Cherche un utilisateur avec son ID.
      */
     @GetMapping(value = "/utilisateur/{id}")
-    public Utilisateur utilisateur(@PathVariable("id") long id) {
+    public Utilisateur getUtilisateur(@PathVariable("id") long id) {
         return utilisateurRepository.findById(id).orElse(null);
     }
 
@@ -47,7 +47,7 @@ public class UtilisateurController {
      * Cherche un utilisateur avec son email.
      */
     @GetMapping(value = "/utilisateurByEmail/{email}")
-    public Utilisateur email(@PathVariable("email") String email) {
+    public Utilisateur getUtilisateurWithEmail(@PathVariable("email") String email) {
         return utilisateurRepository.findByEmail(email);
     }
 

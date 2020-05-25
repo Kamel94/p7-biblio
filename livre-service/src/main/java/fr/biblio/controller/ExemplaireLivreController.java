@@ -27,7 +27,7 @@ public class ExemplaireLivreController {
      * Affiche un exemplaire de par son ID.
      */
     @GetMapping("/exemplaireLivre/{id}")
-    public ExemplaireLivre exemplaire(@PathVariable("id") long id) {
+    public ExemplaireLivre getExemplaire(@PathVariable("id") long id) {
 
         ExemplaireLivre exemplaireLivre = livreRepository.findById(id).get();
 
@@ -38,7 +38,7 @@ public class ExemplaireLivreController {
      * Affiche un exemplaire de par l'ID du livre.
      */
     @GetMapping("/exemplaireLivres/{livreId}")
-    public List<ExemplaireLivre> exemplaireParLivre(@PathVariable("livreId") long id) {
+    public List<ExemplaireLivre> getExemplairesWithLivreId(@PathVariable("livreId") long id) {
 
         List<ExemplaireLivre> exemplaireLivre = livreRepository.findByLivreId(id);
 
@@ -49,7 +49,7 @@ public class ExemplaireLivreController {
      * Affiche un exemplaire de par les IDs du livre et de la bibliothèque.
      */
     @GetMapping("/exemplaireLivres/{livreId}/{bibliothequeId}")
-    public ExemplaireLivre exemplaireParLivreEtBiblio(@PathVariable("livreId") long livreId, @PathVariable("bibliothequeId") long bibliothequeId) {
+    public ExemplaireLivre getExemplaireWithLivreIdAndBibliothequeId(@PathVariable("livreId") long livreId, @PathVariable("bibliothequeId") long bibliothequeId) {
 
         ExemplaireLivre exemplaireLivre = livreRepository.findExemplaireLivreByLivreIdAndBibliothequeId(livreId, bibliothequeId);
 
@@ -60,7 +60,7 @@ public class ExemplaireLivreController {
      * Enregistre un exemplaire.
      */
     @PostMapping("/ajoutExemplaire")
-    public ExemplaireLivre ajouterUnExemplaire(@RequestBody ExemplaireLivre exemplaireLivre) {
+    public ExemplaireLivre addExemplaire(@RequestBody ExemplaireLivre exemplaireLivre) {
         return livreRepository.save(exemplaireLivre);
     }
 
@@ -68,7 +68,7 @@ public class ExemplaireLivreController {
      * Permet de modifier un exemplaire.
      */
     @PutMapping(value = "/modifExemplaire")
-    public ExemplaireLivre modification(@RequestBody ExemplaireLivre exemplaireLivre) {
+    public ExemplaireLivre updateExemplaire(@RequestBody ExemplaireLivre exemplaireLivre) {
         return livreRepository.save(exemplaireLivre);
     }
 

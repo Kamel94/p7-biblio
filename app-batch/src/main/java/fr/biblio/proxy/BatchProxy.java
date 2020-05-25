@@ -11,21 +11,18 @@ import java.util.List;
 public interface BatchProxy {
 
     @GetMapping(value = "/authentification-service/utilisateur/{id}")
-    Utilisateur utilisateur(@PathVariable("id") long id);
+    Utilisateur getUtilisateur(@PathVariable("id") long id);
 
     @GetMapping(value = "/livre-service/livres/{id}")
-    Livre afficherUnLivre(@PathVariable("id") long id);
+    Livre getLivre(@PathVariable("id") long id);
 
     @GetMapping("/livre-service/exemplaireLivre/{id}")
-    ExemplaireLivre exemplaire(@PathVariable("id") long id);
+    ExemplaireLivre getExemplaire(@PathVariable("id") long id);
 
     @GetMapping(value = "/livre-service/listeBibliotheques/{id}")
-    Bibliotheque bibliotheque(@PathVariable("id") long id);
+    Bibliotheque getBibliotheque(@PathVariable("id") long id);
 
     @GetMapping(value = "/pret-service/dateRetourPassee")
-    List<Pret> dateRetourPassee();
-
-    @GetMapping(value = "/pret-service/prets/{id}")
-    Pret pret(@PathVariable("id") long id);
+    List<Pret> getPretsFinished();
 
 }

@@ -41,7 +41,7 @@ public class LivreController {
      * Permet d'effectuer une recherche par mot clé et de retourner le résultat.
      */
     @GetMapping(value = "/chercherLivre")
-    public List<Livre> chercherLivre(@RequestParam(name="titre", defaultValue = "") String titre,
+    public List<Livre> chercherLivreParCriteres(@RequestParam(name="titre", defaultValue = "") String titre,
                                      @RequestParam(name="auteur", defaultValue = "") String auteur,
                                      @RequestParam(name="categorie", defaultValue = "") String categorie) {
 
@@ -56,7 +56,7 @@ public class LivreController {
      * Affiche un livre.
      */
     @GetMapping(value = "/livres/{id}")
-    public Livre afficherUnLivre(@PathVariable(name = "id") long id) throws LivreIntrouvableException {
+    public Livre getLivre(@PathVariable(name = "id") long id) throws LivreIntrouvableException {
 
         Livre livre = livreRepository.findById(id).orElse(null);
 
@@ -71,7 +71,7 @@ public class LivreController {
      * Enregistre un livre.
      */
     @PostMapping(value = "/ajoutLivre")
-    public Livre ajouterUnLivre(@RequestBody Livre livre) {
+    public Livre addLivre(@RequestBody Livre livre) {
         return livreRepository.save(livre);
     }
 }

@@ -3,7 +3,6 @@ package fr.biblio.controller;
 import fr.biblio.beans.*;
 import fr.biblio.proxies.LivreProxy;
 import fr.biblio.service.CompteService;
-import fr.biblio.service.DateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class ApplicationController {
     private LivreProxy livreProxy;
 
     @Autowired
-    private DateFormat dateFormat;
-
-    @Autowired
     private CompteService compteService;
 
     Logger log = LoggerFactory.getLogger(ApplicationController.class);
@@ -40,10 +36,10 @@ public class ApplicationController {
                           @RequestParam(name="categorie", defaultValue = "") String categorie) {
 
 
-        List<Livre> livres = livreProxy.chercherLivre(titre, auteur, categorie);
+        List<Livre> livres = livreProxy.chercherLivreParCriteres(titre, auteur, categorie);
 
         if (principal != null) {
-            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            Utilisateur utilisateur = livreProxy.getUtilisateurWithEmail(principal.getName());
             model.addAttribute("utilisateur", utilisateur);
         } else {
             Utilisateur utilisateur = new Utilisateur();
@@ -65,8 +61,8 @@ public class ApplicationController {
     @GetMapping("/detailsLivre/{id}")
     public String detailsLivre(@PathVariable("id") long id, Model model, Principal principal) {
 
-        Livre livre = livreProxy.afficherUnLivre(id);
-        List<ExemplaireLivre> exemplaireLivre = livreProxy.exemplaireParLivre(id);
+        Livre livre = livreProxy.getLivre(id);
+        List<ExemplaireLivre> exemplaireLivre = livreProxy.getExemplairesWithLivreId(id);
         String formatDate = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatDate);
 
@@ -75,7 +71,7 @@ public class ApplicationController {
             utilisateur.setId(Long.valueOf(0));
             model.addAttribute("utilisateur", utilisateur);
         } else {
-            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            Utilisateur utilisateur = livreProxy.getUtilisateurWithEmail(principal.getName());
             model.addAttribute("utilisateur", utilisateur);
         }
 
@@ -97,9 +93,9 @@ public class ApplicationController {
     public String pretUtilisateur(Model model,
                                   @PathVariable("utilisateurId") long utilisateurId) {
 
-        List<Pret> prets = livreProxy.pretUtilisateur(utilisateurId);
+        List<Pret> prets = livreProxy.getPretsWithUtilisateurId(utilisateurId);
 
-        Utilisateur utilisateur = livreProxy.utilisateur(utilisateurId);
+        Utilisateur utilisateur = livreProxy.getUtilisateur(utilisateurId);
 
         String formatDate = "dd/MM/yyyy";
 
@@ -128,7 +124,7 @@ public class ApplicationController {
     public String prolongation(@PathVariable("pretId") long pretId,
                                @PathVariable("utilisateurId") long utilisateurId) {
 
-        Pret prolongation = livreProxy.prolongation(pretId);
+        Pret prolongation = livreProxy.prolongerPret(pretId);
 
         return "redirect:/usager/pretUtilisateur/{utilisateurId}";
     }
@@ -145,7 +141,7 @@ public class ApplicationController {
         model.addAttribute("localDate", dateTime);
 
         if(principal != null) {
-            Utilisateur utilisateur = livreProxy.email(principal.getName());
+            Utilisateur utilisateur = livreProxy.getUtilisateurWithEmail(principal.getName());
             model.addAttribute("u", utilisateur);
         } else {
             Utilisateur utilisateur = new Utilisateur();

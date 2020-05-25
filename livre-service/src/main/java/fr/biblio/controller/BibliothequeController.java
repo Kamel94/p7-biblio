@@ -26,7 +26,7 @@ public class BibliothequeController {
      * Affiche une bibliothèque de par son ID.
      */
     @GetMapping(value = "/listeBibliotheques/{id}")
-    public Bibliotheque bibliotheque(@PathVariable("id") long id) {
+    public Bibliotheque getBibliotheque(@PathVariable("id") long id) {
         return bibliothequeRepository.findById(id).orElse(null);
     }
 

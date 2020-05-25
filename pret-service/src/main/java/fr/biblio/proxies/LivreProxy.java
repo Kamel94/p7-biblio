@@ -21,15 +21,15 @@ public interface LivreProxy {
     List<LivreBean> listeDesLivres();
 
     @GetMapping(value = "/livre-service/livres/{id}")
-    LivreBean afficherUnLivre(@PathVariable(name = "id") Long id);
+    LivreBean getLivre(@PathVariable(name = "id") Long id);
 
     @GetMapping(value = "/livre-service/listeBibliotheques/{id}")
-    Bibliotheque bibliotheque(@PathVariable("id") long id);
+    Bibliotheque getBibliotheque(@PathVariable("id") long id);
 
     @GetMapping("/livre-service/exemplaireLivre/{id}")
-    ExemplaireLivre exemplaire(@PathVariable("id") long id);
+    ExemplaireLivre getExemplaire(@PathVariable("id") long id);
 
     @PutMapping(value = "/livre-service/modifExemplaire")
-    ExemplaireLivre modification(@RequestBody ExemplaireLivre exemplaireLivre);
+    ExemplaireLivre updateExemplaire(@RequestBody ExemplaireLivre exemplaireLivre);
 
 }

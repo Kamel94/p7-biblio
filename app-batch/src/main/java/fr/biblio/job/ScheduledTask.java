@@ -30,14 +30,14 @@ public class ScheduledTask {
     @Scheduled(cron = "0 * * ? * *", zone = "Europe/Paris")
     public void executeTask() {
 
-        List<Pret> retourRetard = batchProxy.dateRetourPassee();
+        List<Pret> retourRetard = batchProxy.getPretsFinished();
 
         try {
             for (Pret pret : retourRetard) {
-                Utilisateur utilisateur = batchProxy.utilisateur(pret.getUtilisateurId());
-                ExemplaireLivre exemplaireLivre = batchProxy.exemplaire(pret.getExemplaireId());
-                Livre livre = batchProxy.afficherUnLivre(exemplaireLivre.getLivreId());
-                Bibliotheque bibliotheque = batchProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
+                Utilisateur utilisateur = batchProxy.getUtilisateur(pret.getUtilisateurId());
+                ExemplaireLivre exemplaireLivre = batchProxy.getExemplaire(pret.getExemplaireId());
+                Livre livre = batchProxy.getLivre(exemplaireLivre.getLivreId());
+                Bibliotheque bibliotheque = batchProxy.getBibliotheque(exemplaireLivre.getBibliothequeId());
 
                 String dateRetour = formaterDate.dateRetour(pret.getDateRetour());
                 String civilite = "";

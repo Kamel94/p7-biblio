@@ -3,7 +3,6 @@ package fr.biblio.controller;
 import fr.biblio.beans.Bibliotheque;
 import fr.biblio.beans.ExemplaireLivre;
 import fr.biblio.beans.LivreBean;
-import fr.biblio.beans.Utilisateur;
 import fr.biblio.configuration.Constantes;
 import fr.biblio.proxies.LivreProxy;
 import fr.biblio.dao.PretRepository;
@@ -40,7 +39,7 @@ public class PretController {
      * Affiche un prêt de par son ID.
      */
     @GetMapping(value = "/prets/{id}")
-    public Pret pret(@PathVariable("id") long id) {
+    public Pret getPret(@PathVariable("id") long id) {
         return pretRepository.findById(id).get();
     }
 
@@ -48,13 +47,13 @@ public class PretController {
      * Affiche la liste des prêts d'un utilisateur.
      */
     @GetMapping(value = "/pretUtilisateur/{utilisateurId}")
-    public List<Pret> pretUtilisateur(@PathVariable("utilisateurId") long utilisateurId) {
+    public List<Pret> getPretsWithUtilisateurId(@PathVariable("utilisateurId") long utilisateurId) {
 
         List<Pret> prets = pretRepository.findByUtilisateurIdAndStatut(utilisateurId, Constantes.PRET);
         for (Pret pret : prets) {
-            ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(pret.getExemplaireId());
-            LivreBean livre = livreProxy.afficherUnLivre(exemplaireLivre.getLivreId());
-            Bibliotheque bibliotheque = livreProxy.bibliotheque(exemplaireLivre.getBibliothequeId());
+            ExemplaireLivre exemplaireLivre = livreProxy.getExemplaire(pret.getExemplaireId());
+            LivreBean livre = livreProxy.getLivre(exemplaireLivre.getLivreId());
+            Bibliotheque bibliotheque = livreProxy.getBibliotheque(exemplaireLivre.getBibliothequeId());
 
             pret.setTitreLivre(livre.getTitre());
             pret.setNomBiblio(bibliotheque.getNom());
@@ -66,7 +65,7 @@ public class PretController {
      * Affiche la liste des prêts dont la date du prêt est passé.
      */
     @GetMapping(value = "/dateRetourPassee")
-    public List<Pret> dateRetourPassee() {
+    public List<Pret> getPretsFinished() {
         Date date = new Date();
         List<Pret> prets = pretRepository.findPretByStatutAndDateRetourBefore(Constantes.PRET, date);
         return prets;
@@ -76,11 +75,11 @@ public class PretController {
      * Permet de modifier le statut et la date retour une fois le livre rendu.
      */
     @PostMapping(value = "/livreRendu/{pretId}")
-    public Pret livreRendu(@PathVariable("pretId") long pretId) {
+    public Pret rendreLivre(@PathVariable("pretId") long pretId) {
 
         Pret pret = pretRepository.findById(pretId).get();
 
-        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(pret.getExemplaireId());
+        ExemplaireLivre exemplaireLivre = livreProxy.getExemplaire(pret.getExemplaireId());
 
         exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() + 1);
 
@@ -88,7 +87,7 @@ public class PretController {
             exemplaireLivre.setDisponibilite(true);
         }
 
-        livreProxy.modification(exemplaireLivre);
+        livreProxy.updateExemplaire(exemplaireLivre);
 
         pret.setStatut(Constantes.RENDU);
         pret.setDateRetour(new Date());
@@ -100,7 +99,7 @@ public class PretController {
      * Permet de prolonger un prêt.
      */
     @PostMapping(value = "/prolongation/{pretId}")
-    public Pret prolongation(@PathVariable("pretId") long pretId) {
+    public Pret prolongerPret(@PathVariable("pretId") long pretId) {
 
         Pret pret = pretRepository.findById(pretId).get();
 
@@ -124,12 +123,12 @@ public class PretController {
      * Permet d'enregistrer un prêt.
      */
     @PostMapping(value = "/ajoutPret/{utilisateurId}/{exemplaireId}")
-    public Pret ajoutPret(@PathVariable("utilisateurId") long utilisateurId,
+    public Pret addPret(@PathVariable("utilisateurId") long utilisateurId,
                           @PathVariable("exemplaireId") long exemplaireId) {
 
         Pret pret = new Pret();
 
-        ExemplaireLivre exemplaireLivre = livreProxy.exemplaire(exemplaireId);
+        ExemplaireLivre exemplaireLivre = livreProxy.getExemplaire(exemplaireId);
 
         exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
 
@@ -137,7 +136,7 @@ public class PretController {
             exemplaireLivre.setDisponibilite(false);
         }
 
-        livreProxy.modification(exemplaireLivre);
+        livreProxy.updateExemplaire(exemplaireLivre);
 
         try {
             GregorianCalendar date = new GregorianCalendar();
