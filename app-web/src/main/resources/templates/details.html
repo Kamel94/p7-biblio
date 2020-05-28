@@ -32,9 +32,10 @@
         <tr>
         <td class="mt-3">
             <strong class="text-primary"><br>Disponibilité :
+
             </strong> &nbsp; &nbsp; &nbsp;
             <span th:each="e : ${exemplaires}">
-                  <strong class="text-info">- [[${e.bibliotheque.nom}]] : </strong>  &nbsp;
+                  <strong class="text-info"><br>- [[${e.bibliotheque.nom}]] : </strong>  &nbsp;
                 <span th:text="${e.nombreExemplaire}"></span>
             </span>
         </td>
