@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -111,6 +112,7 @@ public class ApplicationController {
             e.printStackTrace();
         }
 
+        model.addAttribute("today", new Date());
         model.addAttribute("prets", prets);
         model.addAttribute("utilisateur", utilisateur);
 

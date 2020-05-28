@@ -23,8 +23,13 @@
             <div th:each="pret : ${prets}">
                 <table class="table text-info mt-3">
                     <tbody>
-                    <tr class="text-center bg-info">
+                    <tr th:if="${today} < ${pret.dateRetour}"
+                        class="text-center bg-info">
                         <td><strong class="text-light text-center">[[${pret.titreLivre}]] </strong> &nbsp; &nbsp; &nbsp; </td>
+                    </tr>
+                    <tr th:if="${today} > ${pret.dateRetour}"
+                        class="text-center bg-danger">
+                        <td class="text-light"><strong class="text-light text-center">[[${pret.titreLivre}]] </strong> &nbsp; &nbsp; &nbsp; (En retard)</td>
                     </tr>
                     </tbody>
                     <tbody>
