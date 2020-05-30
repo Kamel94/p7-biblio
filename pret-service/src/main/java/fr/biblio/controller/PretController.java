@@ -79,20 +79,26 @@ public class PretController {
 
         Pret pret = pretRepository.findById(pretId).get();
 
-        ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(pret.getExemplaireId());
+        if (pret.getStatut().equals("PRET")) {
 
-        exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() + 1);
+            ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(pret.getExemplaireId());
 
-        if (exemplaireLivre.getNombreExemplaire() > 0) {
-            exemplaireLivre.setDisponibilite(true);
+            exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() + 1);
+
+            if (exemplaireLivre.getNombreExemplaire() > 0) {
+                exemplaireLivre.setDisponibilite(true);
+            }
+
+            pretProxy.updateExemplaire(exemplaireLivre);
+
+            pret.setStatut(Constantes.RENDU);
+            pret.setDateRetour(new Date());
+
+            return pretRepository.save(pret);
+        } else {
+            log.info("Ce prêt n'est pas en cours...");
         }
-
-        pretProxy.updateExemplaire(exemplaireLivre);
-
-        pret.setStatut(Constantes.RENDU);
-        pret.setDateRetour(new Date());
-
-        return pretRepository.save(pret);
+        return null;
     }
 
     /**
@@ -103,20 +109,24 @@ public class PretController {
 
         Pret pret = pretRepository.findById(pretId).get();
 
-        try {
-            GregorianCalendar date = new GregorianCalendar();
+        if (pret.getProlongation() == 0) {
+            try {
+                GregorianCalendar date = new GregorianCalendar();
 
-            date.setTime(pret.getDateRetour());
-            date.add(GregorianCalendar.DAY_OF_YEAR, +28);
+                date.setTime(pret.getDateRetour());
+                date.add(GregorianCalendar.DAY_OF_YEAR, +28);
 
-            pret.setDateRetour(date.getTime());
-            pret.setProlongation(pret.getProlongation()+1);
+                pret.setDateRetour(date.getTime());
+                pret.setProlongation(pret.getProlongation() + 1);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return pretRepository.save(pret);
+        } else {
+            log.info("Ce prêt a atteint le nombre maximum de prolongation...");
         }
-
-        return pretRepository.save(pret);
+        return null;
     }
 
     /**
@@ -127,36 +137,41 @@ public class PretController {
                           @PathVariable("exemplaireId") long exemplaireId) {
 
         Pret pret = new Pret();
-
         ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(exemplaireId);
 
-        exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
+        if(!exemplaireLivre.isDisponibilite()) {
+            log.info("L'exemplaire '" + exemplaireLivre.getLivre().getTitre() + "' n'est pas disponible...");
 
-        if (exemplaireLivre.getNombreExemplaire() == 0) {
-            exemplaireLivre.setDisponibilite(false);
+        } else {
+
+            exemplaireLivre.setNombreExemplaire(exemplaireLivre.getNombreExemplaire() - 1);
+
+            if (exemplaireLivre.getNombreExemplaire() == 0) {
+                exemplaireLivre.setDisponibilite(false);
+            }
+
+            pretProxy.updateExemplaire(exemplaireLivre);
+
+            try {
+                GregorianCalendar date = new GregorianCalendar();
+
+                pret.setDatePret(new Date());
+
+                date.setTime(pret.getDatePret());
+                date.add(GregorianCalendar.DAY_OF_YEAR, +28);
+
+                pret.setUtilisateurId(utilisateurId);
+                pret.setDateRetour(date.getTime());
+                pret.setProlongation(0);
+                pret.setExemplaireId(exemplaireLivre.getId());
+                pret.setStatut("PRET");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return pretRepository.save(pret);
         }
-
-        pretProxy.updateExemplaire(exemplaireLivre);
-
-        try {
-            GregorianCalendar date = new GregorianCalendar();
-
-            pret.setDatePret(new Date());
-
-            date.setTime(pret.getDatePret());
-            date.add(GregorianCalendar.DAY_OF_YEAR, +28);
-
-            pret.setUtilisateurId(utilisateurId);
-            pret.setDateRetour(date.getTime());
-            pret.setProlongation(0);
-            pret.setExemplaireId(exemplaireLivre.getId());
-            pret.setStatut("PRET");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return pretRepository.save(pret);
+        return null;
     }
 
 }
