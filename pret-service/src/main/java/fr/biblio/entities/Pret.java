@@ -19,9 +19,6 @@ public class Pret implements Serializable {
 
     private Date dateRetour;
 
-    @Transient
-    private String dateRetourString;
-
     private String statut;
 
     private int prolongation;
@@ -34,6 +31,8 @@ public class Pret implements Serializable {
     private String titreLivre;
     @Transient
     private String nomBiblio;
+    @Transient
+    private String dateRetourString;
     @Transient
     private int numeroSerieExemplaire;
 
