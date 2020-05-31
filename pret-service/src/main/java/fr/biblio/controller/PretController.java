@@ -56,6 +56,7 @@ public class PretController {
             Bibliotheque bibliotheque = pretProxy.getBibliotheque(exemplaireLivre.getBibliothequeId());
 
             pret.setTitreLivre(livre.getTitre());
+            pret.setNumeroSerieExemplaire(exemplaireLivre.getNumeroSerie());
             pret.setNomBiblio(bibliotheque.getNom());
         }
         return prets;
@@ -79,7 +80,7 @@ public class PretController {
 
         Pret pret = pretRepository.findById(pretId).get();
 
-        if (pret.getStatut().equals("PRET")) {
+        if (pret.getStatut().equals(Constantes.PRET)) {
 
             ExemplaireLivre exemplaireLivre = pretProxy.getExemplaire(pret.getExemplaireId());
 

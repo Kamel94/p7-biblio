@@ -28,8 +28,8 @@ CREATE TABLE public.utilisateur (
     actif BOOLEAN NOT NULL,
     date_creation TIMESTAMP,
     date_modif TIMESTAMP,
-    utilisateur_createur TIMESTAMP,
-    utilisateur_modif TIMESTAMP,
+    utilisateur_createur BIGINT,
+    utilisateur_modif BIGINT,
     CONSTRAINT utilisateur_pk PRIMARY KEY (id)
 );
 

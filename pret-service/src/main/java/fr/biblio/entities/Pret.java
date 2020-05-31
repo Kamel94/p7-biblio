@@ -1,5 +1,6 @@
 package fr.biblio.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,8 +32,9 @@ public class Pret implements Serializable {
 
     @Transient
     private String titreLivre;
-
     @Transient
     private String nomBiblio;
+    @Transient
+    private int numeroSerieExemplaire;
 
 }

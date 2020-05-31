@@ -48,9 +48,8 @@ public class Pret {
 
     private ExemplaireLivre exemplaireLivre;
     private Utilisateur utilisateur;
-
+    private int numeroSerieExemplaire;
     private String titreLivre;
-
     private String nomBiblio;
 
 }

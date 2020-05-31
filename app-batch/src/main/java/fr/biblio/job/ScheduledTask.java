@@ -27,6 +27,11 @@ public class ScheduledTask {
     @Autowired
     private SimpleEmailService emailService;
 
+    /**
+     * Envoie automatiquement des mails aux utilisateurs qui n'ont pas rendu leurs prêts à temps
+     * Si vous voulez programmer l'envoie pour tous les jours à 8h du matin,
+     * vous devez mettre au niveau de cron "0 0 8 ? * *" .
+     */
     @Scheduled(cron = "0 * * ? * *", zone = "Europe/Paris")
     public void executeTask() {
 
@@ -42,8 +47,7 @@ public class ScheduledTask {
                 String dateRetour = formaterDate.dateRetour(pret.getDateRetour());
                 String civilite = "";
                 String msgProlongement = "";
-                String mail = utilisateur.getEmail();
-                String destinataire = mail;
+                String destinataire = utilisateur.getEmail();
                 String objet = "Rappel, la date du prêt est arrivée à échéance !";
 
                 if (utilisateur.getGenreId() == 1) {
@@ -69,7 +73,7 @@ public class ScheduledTask {
 
                 // envoie du mail
                 log.info("****************************************************************************************");
-                log.info("Rappel envoyé a: " + mail);
+                log.info("Rappel envoyé a: " + destinataire);
                 log.info("****************************************************************************************");
                 emailService.sendSimpleEmail(destinataire, objet, message);
             }
