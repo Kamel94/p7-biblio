@@ -32,7 +32,7 @@ public class ScheduledTask {
      * Si vous voulez programmer l'envoie pour tous les jours à 8h du matin,
      * vous devez mettre au niveau de cron "0 0 8 ? * *" .
      */
-    @Scheduled(cron = "0 * * ? * *", zone = "Europe/Paris")
+    @Scheduled(cron = "* * * ? * *", zone = "Europe/Paris")
     public void executeTask() {
 
         List<Pret> retourRetard = batchProxy.getPretsFinished();
@@ -67,7 +67,7 @@ public class ScheduledTask {
                         " de " + livre.getAuteur() +
                         " était le " + dateRetour + "..." +
                         "\nMerci de rapporter le livre au plus tôt à la bibliothèque " +
-                        bibliotheque.getNom() + "." +
+                        "''" + bibliotheque.getNom() + "''" + "." +
                         "\n" + msgProlongement +
                         "\n\nService de la ville";
 
